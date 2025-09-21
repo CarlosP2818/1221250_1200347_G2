@@ -40,7 +40,6 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/authors")
-@Log4j
 public class AuthorController {
     private final AuthorService authorService;
     private final AuthorViewMapper authorViewMapper;
