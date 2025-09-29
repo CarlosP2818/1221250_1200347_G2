@@ -2,32 +2,22 @@ package pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import pt.psoft.g1.psoftg1.authormanagement.api.AuthorLendingView;
+import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.AuthorJpa;
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.authormanagement.repositories.AuthorRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface SpringDataAuthorRepository extends AuthorRepository, CrudRepository<Author, Long> {
-    @Override
-    Optional<Author> findByAuthorNumber(Long authorNumber);
+public interface SpringDataAuthorRepository extends JpaRepository<AuthorJpa, Long> {
+    Optional<AuthorJpa> findByAuthorNumber(Long authorNumber);
 
-    @Override
-    @Query("SELECT new pt.psoft.g1.psoftg1.authormanagement.api.AuthorLendingView(a.name.name, COUNT(l.pk)) " +
-            "FROM Book b " +
-            "JOIN b.authors a " +
-            "JOIN Lending l ON l.book.pk = b.pk " +
-            "GROUP BY a.name " +
-            "ORDER BY COUNT(l) DESC")
-    Page<AuthorLendingView> findTopAuthorByLendings(Pageable pageable);
+    List<AuthorJpa> findByName_NameStartsWith(String name);
 
-    @Query("SELECT DISTINCT coAuthor FROM Book b " +
-            "JOIN b.authors coAuthor " +
-            "WHERE b IN (SELECT b FROM Book b JOIN b.authors a WHERE a.authorNumber = :authorNumber) " +
-            "AND coAuthor.authorNumber <> :authorNumber")
-    List<Author> findCoAuthorsByAuthorNumber(Long authorNumber);
+    List<AuthorJpa> findByName_Name(String name); // Queries that require Book/Lending mappings (top/co-authors) will be added once their JPA models exist.
 }
 

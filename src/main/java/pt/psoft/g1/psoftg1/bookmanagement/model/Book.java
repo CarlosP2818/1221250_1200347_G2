@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import org.hibernate.StaleObjectStateException;
+import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.AuthorJpa;
+import pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.AuthorJpaMapper;
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.bookmanagement.services.UpdateBookRequest;
 import pt.psoft.g1.psoftg1.exceptions.ConflictException;
@@ -43,7 +45,7 @@ public class Book extends EntityWithPhoto {
 
     @Getter
     @ManyToMany
-    private List<Author> authors = new ArrayList<>();
+    private List<AuthorJpa> authors = new ArrayList<>();
 
     @Embedded
     Description description;
@@ -58,7 +60,7 @@ public class Book extends EntityWithPhoto {
 
     private void setGenre(Genre genre) {this.genre = genre; }
 
-    private void setAuthors(List<Author> authors) {this.authors = authors; }
+    private void setAuthors(List<Author> authors) {this.authors = authors.stream().map(AuthorJpaMapper::toJpa).toList(); }
 
     public String getDescription(){ return this.description.toString(); }
 
