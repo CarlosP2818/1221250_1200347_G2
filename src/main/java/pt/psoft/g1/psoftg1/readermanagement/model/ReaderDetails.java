@@ -5,12 +5,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import pt.psoft.g1.psoftg1.exceptions.ConflictException;
+import pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.jpa.GenreJpa;
+import pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl.GenreJpaMapper;
 import pt.psoft.g1.psoftg1.genremanagement.model.Genre;
 import pt.psoft.g1.psoftg1.readermanagement.services.UpdateReaderRequest;
 import pt.psoft.g1.psoftg1.shared.model.EntityWithPhoto;
 import pt.psoft.g1.psoftg1.usermanagement.model.Reader;
 
 import java.nio.file.InvalidPathException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -56,7 +59,7 @@ public class ReaderDetails extends EntityWithPhoto {
     @Getter
     @Setter
     @ManyToMany
-    private List<Genre> interestList;
+    private List<GenreJpa> interestList;
 
     public ReaderDetails(int readerNumber, Reader reader, String birthDate, String phoneNumber, boolean gdpr, boolean marketing, boolean thirdParty, String photoURI, List<Genre> interestList) {
         if(reader == null || phoneNumber == null) {
@@ -77,7 +80,11 @@ public class ReaderDetails extends EntityWithPhoto {
         setPhotoInternal(photoURI);
         setMarketingConsent(marketing);
         setThirdPartySharingConsent(thirdParty);
-        setInterestList(interestList);
+        if(interestList == null) {
+            setInterestList(new ArrayList<GenreJpa>());
+        }else {
+            setInterestList(interestList.stream().map(GenreJpaMapper::toJpa).toList());
+        }
     }
 
     private void setPhoneNumber(PhoneNumber number) {
@@ -146,7 +153,7 @@ public class ReaderDetails extends EntityWithPhoto {
         }
 
         if(interestList != null) {
-            this.interestList = interestList;
+            this.interestList = interestList.stream().map(GenreJpaMapper::toJpa).toList();
         }
     }
 

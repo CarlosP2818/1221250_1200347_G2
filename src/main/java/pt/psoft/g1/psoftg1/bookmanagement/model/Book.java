@@ -10,6 +10,8 @@ import pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.Aut
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.bookmanagement.services.UpdateBookRequest;
 import pt.psoft.g1.psoftg1.exceptions.ConflictException;
+import pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.jpa.GenreJpa;
+import pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl.GenreJpaMapper;
 import pt.psoft.g1.psoftg1.genremanagement.model.Genre;
 import pt.psoft.g1.psoftg1.shared.model.EntityWithPhoto;
 
@@ -41,7 +43,7 @@ public class Book extends EntityWithPhoto {
     @Getter
     @ManyToOne
     @NotNull
-    Genre genre;
+    GenreJpa genre;
 
     @Getter
     @ManyToMany
@@ -58,7 +60,7 @@ public class Book extends EntityWithPhoto {
 
     private void setDescription(String description) {this.description = new Description(description); }
 
-    private void setGenre(Genre genre) {this.genre = genre; }
+    private void setGenre(Genre genre) {this.genre = GenreJpaMapper.toJpa(genre); }
 
     private void setAuthors(List<Author> authors) {this.authors = authors.stream().map(AuthorJpaMapper::toJpa).toList(); }
 

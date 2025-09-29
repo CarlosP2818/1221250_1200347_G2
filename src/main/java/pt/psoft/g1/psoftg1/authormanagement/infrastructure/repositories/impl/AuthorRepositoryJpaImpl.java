@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class AuthorRepositoryImpl implements AuthorRepository {
+public class AuthorRepositoryJpaImpl implements AuthorRepository {
     private final SpringDataAuthorRepository jpaRepository;
 
     @Override

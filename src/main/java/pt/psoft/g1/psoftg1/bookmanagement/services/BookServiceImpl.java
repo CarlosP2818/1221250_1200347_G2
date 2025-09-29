@@ -11,6 +11,7 @@ import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.bookmanagement.model.*;
 import pt.psoft.g1.psoftg1.bookmanagement.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
+import pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl.GenreJpaMapper;
 import pt.psoft.g1.psoftg1.genremanagement.repositories.GenreRepository;
 import pt.psoft.g1.psoftg1.authormanagement.repositories.AuthorRepository;
 import pt.psoft.g1.psoftg1.exceptions.ConflictException;
@@ -170,7 +171,7 @@ public class BookServiceImpl implements BookService {
 
 		ReaderDetails readerDetails = readerRepository.findByReaderNumber(readerNumber)
 				.orElseThrow(() -> new NotFoundException("Reader not found with provided login"));
-		List<Genre> interestList = readerDetails.getInterestList();
+		List<Genre> interestList = readerDetails.getInterestList().stream().map(GenreJpaMapper::toDomain).toList();
 
 		if(interestList.isEmpty()) {
 			throw new NotFoundException("Reader has no interests");
