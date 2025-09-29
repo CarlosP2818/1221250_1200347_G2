@@ -3,7 +3,7 @@ package pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl;
 import org.springframework.stereotype.Component;
 import pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.jpa.GenreJpa;
 import pt.psoft.g1.psoftg1.genremanagement.model.Genre;
-
+//TODO: Mapper com MapStruct (apenas quando todos os domain estiverem desacoplados das JPA)
 @Component
 public class GenreJpaMapper {
     public static Genre toDomain(GenreJpa jpa) {
