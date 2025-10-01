@@ -56,7 +56,6 @@ public class ReaderDetails extends EntityWithPhoto {
     @Getter
     private Long version;
 
-    @Getter
     @Setter
     @ManyToMany
     private List<GenreJpa> interestList;
@@ -163,6 +162,10 @@ public class ReaderDetails extends EntityWithPhoto {
         }
 
         setPhotoInternal(null);
+    }
+
+    public List<Genre> getInterestList() {
+        return interestList.stream().map(GenreJpaMapper::toDomain).toList();
     }
 
     public String getReaderNumber(){

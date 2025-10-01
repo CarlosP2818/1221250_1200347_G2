@@ -171,7 +171,7 @@ public class BookServiceImpl implements BookService {
 
 		ReaderDetails readerDetails = readerRepository.findByReaderNumber(readerNumber)
 				.orElseThrow(() -> new NotFoundException("Reader not found with provided login"));
-		List<Genre> interestList = readerDetails.getInterestList().stream().map(GenreJpaMapper::toDomain).toList();
+		List<Genre> interestList = readerDetails.getInterestList();
 
 		if(interestList.isEmpty()) {
 			throw new NotFoundException("Reader has no interests");
