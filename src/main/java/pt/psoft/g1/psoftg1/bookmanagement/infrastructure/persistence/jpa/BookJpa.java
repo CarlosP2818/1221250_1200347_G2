@@ -10,6 +10,7 @@ import pt.psoft.g1.psoftg1.bookmanagement.model.Isbn;
 import pt.psoft.g1.psoftg1.bookmanagement.model.Title;
 import pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.jpa.GenreJpa;
 import pt.psoft.g1.psoftg1.shared.model.EntityWithPhoto;
+import pt.psoft.g1.psoftg1.shared.model.Photo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,8 @@ import java.util.List;
         @UniqueConstraint(name = "uc_book_isbn", columnNames = {"ISBN"})
 })
 @Setter
-public class BookJpa extends EntityWithPhoto {
+@Getter
+public class BookJpa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long pk;
@@ -48,7 +50,12 @@ public class BookJpa extends EntityWithPhoto {
     @Embedded
     DescriptionEmbedded description;
 
-    public BookJpa(String isbn, String title, String description, GenreJpa genre, List<AuthorJpa> authors, String photoURI) {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "photo_id")
+    @Getter
+    private Photo photo;
+
+    public BookJpa(String isbn, String title, String description, GenreJpa genre, List<AuthorJpa> authors, Photo photoURI) {
         setTitle(new TitleEmbedded(title));
         setIsbn(new IsbnEmbedded(isbn));
         if(description != null)
@@ -62,7 +69,7 @@ public class BookJpa extends EntityWithPhoto {
             throw new IllegalArgumentException("Author list is empty");
 
         setAuthors(authors);
-        setPhotoInternal(photoURI);
+        setPhoto(photoURI);
     }
 
     protected BookJpa() {

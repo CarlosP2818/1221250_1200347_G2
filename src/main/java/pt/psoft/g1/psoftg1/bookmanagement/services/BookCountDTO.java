@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.jpa.BookJpa;
 import pt.psoft.g1.psoftg1.bookmanagement.model.Book;
 
 @Getter
@@ -12,6 +13,6 @@ import pt.psoft.g1.psoftg1.bookmanagement.model.Book;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookCountDTO {
-    private Book book;
+    private BookJpa book;
     private long lendingCount;
 }

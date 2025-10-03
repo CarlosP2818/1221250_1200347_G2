@@ -1,9 +1,10 @@
-package pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.jpa;
+package pt.psoft.g1.psoftg1.bookmanagement.infrastructure.repositories.impl.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.AuthorJpa;
 import pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.jpa.AuthorJpaMapper;
+import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.jpa.BookJpa;
 import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.repositories.impl.jpa.SpringDataBookRepository;
 import pt.psoft.g1.psoftg1.bookmanagement.model.Book;
 import pt.psoft.g1.psoftg1.bookmanagement.model.Description;
@@ -29,12 +30,12 @@ public class BookJpaMapper {
         if (jpa == null) return null;
 
         return new Book(
-                new Isbn(jpa.isbn.isbn),           // identidade no domínio
-                new Title(jpa.title.getTitle()),
-                jpa.description != null ? jpa.description.description : null,
+                jpa.getIsbn().toString(),
+                jpa.getTitle().getTitle(),
+                jpa.getDescription() != null ? jpa.getDescription().toString() : null,
                 GenreJpaMapper.toDomain(jpa.getGenre()),
                 jpa.getAuthors().stream().map(AuthorJpaMapper::toDomain).toList(),
-                jpa.getPhotoURI()
+                jpa.getPhoto() != null ? jpa.getPhoto().getPhotoFile() : null
         );
     }
 
@@ -43,7 +44,7 @@ public class BookJpaMapper {
 
         // Preferir devolver um BookJpa já existente (mesmo que ID técnico seja diferente)
         if (repo != null) {
-            Optional<BookJpa> existing = repo.findByIsbn_Isbn(book.getId().getIsbn());
+            Optional<BookJpa> existing = repo.findByIsbn_Isbn(book.getIsbn());
             if (existing.isPresent()) {
                 return existing.get();
             }
@@ -55,12 +56,12 @@ public class BookJpaMapper {
                 .collect(Collectors.toList());
 
         return new BookJpa(
-                book.getId().getIsbn(),
+                book.getIsbn(),
                 book.getTitle().getTitle(),
-                book.getDescription() != null ? book.getDescription().getDescription() : null,
+                book.getDescription() != null ? book.getDescription() : null,
                 GenreJpaMapper.toJpa(book.getGenre()),
                 authorJpas,
-                book.getPhotoURI()
+                book.getPhoto()
         );
     }
 }

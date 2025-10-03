@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import org.hibernate.StaleObjectStateException;
+import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.jpa.BookJpa;
+import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.repositories.impl.jpa.BookJpaMapper;
 import pt.psoft.g1.psoftg1.bookmanagement.model.Book;
 import pt.psoft.g1.psoftg1.readermanagement.model.ReaderDetails;
 
@@ -55,7 +57,7 @@ public class Lending {
     @NotNull
     @Getter
     @ManyToOne(fetch=FetchType.EAGER, optional = false)
-    private Book book;
+    private BookJpa book;
 
     /**
      * {@code Reader} associated with this {@code Lending}.
@@ -131,7 +133,7 @@ public class Lending {
      * */
     public Lending(Book book, ReaderDetails readerDetails, int seq, int lendingDuration, int fineValuePerDayInCents){
         try {
-            this.book = Objects.requireNonNull(book);
+            this.book = BookJpaMapper.toJpa(Objects.requireNonNull(book));
             this.readerDetails = Objects.requireNonNull(readerDetails);
         }catch (NullPointerException e){
             throw new IllegalArgumentException("Null objects passed to lending");
@@ -245,7 +247,7 @@ public class Lending {
         Lending lending = new Lending();
 
         try {
-            lending.book = Objects.requireNonNull(book);
+            lending.book = BookJpaMapper.toJpa(Objects.requireNonNull(book));
             lending.readerDetails = Objects.requireNonNull(readerDetails);
         }catch (NullPointerException e){
             throw new IllegalArgumentException("Null objects passed to lending");

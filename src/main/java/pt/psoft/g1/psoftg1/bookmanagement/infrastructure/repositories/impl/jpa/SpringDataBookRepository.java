@@ -12,11 +12,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface SpringDataBookRepository extends JpaRepository<BookJpa, String> {
+public interface SpringDataBookRepository extends JpaRepository<BookJpa, Long> {
 
     Optional<BookJpa> findByIsbn_Isbn(String isbn);
 
-    @Query("SELECT new pt.psoft.g1.psoftg1.bookmanagement.services.BookCountDTO(Book, COUNT(l)) " +
+    @Query("SELECT new pt.psoft.g1.psoftg1.bookmanagement.services.BookCountDTO(BookJpa , COUNT(l)) " +
             "FROM BookJpa b " +
             "JOIN Lending l ON l.book = b " +
             "WHERE l.startDate > :oneYearAgo " +
