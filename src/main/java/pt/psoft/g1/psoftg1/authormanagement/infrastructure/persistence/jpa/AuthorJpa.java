@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.Setter;
+import pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa.NameEmbeddable;
 import pt.psoft.g1.psoftg1.shared.model.Photo;
 //TODO: generate API manually base65
 @Setter

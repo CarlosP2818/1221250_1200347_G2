@@ -1,4 +1,4 @@
-package pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl;
+package pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.jpa;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

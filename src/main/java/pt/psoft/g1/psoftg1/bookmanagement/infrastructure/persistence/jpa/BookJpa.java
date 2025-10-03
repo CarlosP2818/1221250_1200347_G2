@@ -29,12 +29,12 @@ public class BookJpa extends EntityWithPhoto {
     private Long version;
 
     @Embedded
-    Isbn isbn;
+    IsbnEmbedded isbn;
 
     @Getter
     @Embedded
     @NotNull
-    Title title;
+    TitleEmbedded title;
 
     @Getter
     @ManyToOne
@@ -46,13 +46,13 @@ public class BookJpa extends EntityWithPhoto {
     private List<AuthorJpa> authors = new ArrayList<>();
 
     @Embedded
-    Description description;
+    DescriptionEmbedded description;
 
     public BookJpa(String isbn, String title, String description, GenreJpa genre, List<AuthorJpa> authors, String photoURI) {
-        setTitle(new Title(title));
-        setIsbn(new Isbn(isbn));
+        setTitle(new TitleEmbedded(title));
+        setIsbn(new IsbnEmbedded(isbn));
         if(description != null)
-            setDescription(new Description(description));
+            setDescription(new DescriptionEmbedded(description));
         if(genre==null)
             throw new IllegalArgumentException("Genre cannot be null");
         setGenre(genre);

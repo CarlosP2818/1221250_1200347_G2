@@ -1,17 +1,11 @@
 package pt.psoft.g1.psoftg1.bookmanagement.model;
 
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import org.hibernate.StaleObjectStateException;
-import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.AuthorJpa;
-import pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.AuthorJpaMapper;
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.bookmanagement.services.UpdateBookRequest;
 import pt.psoft.g1.psoftg1.exceptions.ConflictException;
-import pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.jpa.GenreJpa;
-import pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl.GenreJpaMapper;
 import pt.psoft.g1.psoftg1.genremanagement.model.Genre;
 import pt.psoft.g1.psoftg1.shared.model.EntityWithPhoto;
 
@@ -19,37 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "Book", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_book_isbn", columnNames = {"ISBN"})
-})
 public class Book extends EntityWithPhoto {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Getter
     long pk;
 
-    @Version
     @Getter
     private Long version;
 
-    @Embedded
     Isbn isbn;
 
     @Getter
-    @Embedded
-    @NotNull
     Title title;
 
     @Getter
-    @ManyToOne
-    @NotNull
-    GenreJpa genre;
+    Genre genre;
 
     @Getter
-    @ManyToMany
-    private List<AuthorJpa> authors = new ArrayList<>();
+    private List<Author> authors = new ArrayList<>();
 
-    @Embedded
     Description description;
 
     private void setTitle(String title) {this.title = new Title(title);}
@@ -60,9 +41,9 @@ public class Book extends EntityWithPhoto {
 
     private void setDescription(String description) {this.description = new Description(description); }
 
-    private void setGenre(Genre genre) {this.genre = GenreJpaMapper.toJpa(genre); }
+    private void setGenre(Genre genre) {this.genre = genre; }
 
-    private void setAuthors(List<Author> authors) {this.authors = authors.stream().map(AuthorJpaMapper::toJpa).toList(); }
+    private void setAuthors(List<Author> authors) {this.authors = authors; }
 
     public String getDescription(){ return this.description.toString(); }
 

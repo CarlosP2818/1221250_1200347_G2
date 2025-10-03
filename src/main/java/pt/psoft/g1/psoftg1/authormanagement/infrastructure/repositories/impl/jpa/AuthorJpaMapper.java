@@ -1,9 +1,9 @@
-package pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl;
+package pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.jpa;
 
 import org.springframework.stereotype.Component;
 import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.AuthorJpa;
 import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.BioEmbeddable;
-import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.NameEmbeddable;
+import pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa.NameEmbeddable;
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 
 @Component

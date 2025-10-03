@@ -28,5 +28,6 @@ public interface BookRepository {
     List<Book> searchBooks(pt.psoft.g1.psoftg1.shared.services.Page page, SearchBooksQuery query);
 
     Book save(Book book);
+    Iterable<Book> findAll();
     void delete(Book book);
 }
