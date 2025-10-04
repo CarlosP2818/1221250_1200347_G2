@@ -73,7 +73,6 @@ public interface SpringDataLendingRepository extends LendingRepository, LendingR
             , nativeQuery = true)
     Double getAvgLendingDurationByIsbn(@Param("isbn") String isbn);
 
-
 }
 
 interface LendingRepoCustom {

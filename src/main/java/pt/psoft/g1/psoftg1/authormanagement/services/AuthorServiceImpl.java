@@ -1,6 +1,9 @@
 package pt.psoft.g1.psoftg1.authormanagement.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,12 +28,16 @@ public class AuthorServiceImpl implements AuthorService {
     private final PhotoRepository photoRepository;
 
     @Override
+    @Cacheable(value = "authors_all")
     public Iterable<Author> findAll() {
+        System.out.println("A ir buscar todos os autores à BD...");
         return authorRepository.findAll();
     }
 
     @Override
+    @Cacheable(value = "authors", key = "#authorNumber")
     public Optional<Author> findByAuthorNumber(final Long authorNumber) {
+        System.out.println("A ir buscar autor à BD...");
         return authorRepository.findByAuthorNumber(authorNumber);
     }
 
@@ -40,6 +47,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @CachePut(value = "authors", key = "#result.authorNumber")
     public Author create(final CreateAuthorRequest resource) {
         /*
          * Since photos can be null (no photo uploaded) that means the URI can be null as well.
@@ -112,6 +120,7 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findCoAuthorsByAuthorNumber(authorNumber);
     }
     @Override
+    @CacheEvict(value = "authors", key = "#authorNumber")
     public Optional<Author> removeAuthorPhoto(Long authorNumber, long desiredVersion) {
         Author author = authorRepository.findByAuthorNumber(authorNumber)
                 .orElseThrow(() -> new NotFoundException("Cannot find reader"));
