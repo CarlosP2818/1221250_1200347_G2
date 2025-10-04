@@ -4,7 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.jpa.BookJpa;
 import pt.psoft.g1.psoftg1.lendingmanagement.model.Lending;
+import pt.psoft.g1.psoftg1.readermanagement.model.ReaderDetails;
 import pt.psoft.g1.psoftg1.shared.api.MapperInterface;
 
 import java.util.*;
@@ -30,4 +32,10 @@ public abstract class LendingViewMapper extends MapperInterface {
     public abstract List<LendingView> toLendingView(List<Lending> lendings);
 
     public abstract LendingsAverageDurationView toLendingsAverageDurationView(Double lendingsAverageDuration);
+
+    @Named("bookLink")
+    public Map<String, String> bookLink(BookJpa book) {
+        if (book == null) return null;
+        return Map.of("href", "/api/books/" + book.getIsbn().getIsbn()); // usa o ID ou lendingNumber
+    }
 }
