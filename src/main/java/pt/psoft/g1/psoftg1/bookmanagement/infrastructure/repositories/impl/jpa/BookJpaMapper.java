@@ -30,7 +30,7 @@ public class BookJpaMapper {
         if (jpa == null) return null;
 
         return new Book(
-                jpa.getIsbn().toString(),
+                jpa.getIsbn().getIsbn(),
                 jpa.getTitle().getTitle(),
                 jpa.getDescription() != null ? jpa.getDescription().toString() : null,
                 GenreJpaMapper.toDomain(jpa.getGenre()),

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.util.StringUtils;
+import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.jpa.BookJpa;
 import pt.psoft.g1.psoftg1.bookmanagement.model.Book;
 import pt.psoft.g1.psoftg1.genremanagement.services.GenreLendingsDTO;
 import pt.psoft.g1.psoftg1.genremanagement.services.GenreLendingsPerMonthDTO;
@@ -36,7 +37,7 @@ public interface SpringDataLendingRepository extends LendingRepository, LendingR
     @Override
     @Query("SELECT l " +
             "FROM Lending l " +
-            "JOIN Book b ON l.book.pk = b.pk " +
+            "JOIN BookJpa b ON l.book.pk = b.pk " +
             "JOIN ReaderDetails r ON l.readerDetails.pk = r.pk " +
             "WHERE b.isbn.isbn = :isbn " +
             "AND r.readerNumber.readerNumber = :readerNumber ")
@@ -117,7 +118,7 @@ class LendingRepoCustomImpl implements LendingRepoCustom {
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Lending> cq = cb.createQuery(Lending.class);
         final Root<Lending> lendingRoot = cq.from(Lending.class);
-        final Join<Lending, Book> bookJoin = lendingRoot.join("book");
+        final Join<Lending, BookJpa> bookJoin = lendingRoot.join("book");
         final Join<Lending, ReaderDetails> readerDetailsJoin = lendingRoot.join("readerDetails");
         cq.select(lendingRoot);
 
