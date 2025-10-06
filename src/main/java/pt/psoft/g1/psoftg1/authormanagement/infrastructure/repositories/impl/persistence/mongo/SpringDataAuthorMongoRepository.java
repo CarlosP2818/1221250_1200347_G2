@@ -1,4 +1,4 @@
-package pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl;
+package pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.persistence.mongo;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Repository
 @Profile("bootstrap")
-public interface SpringDataAuthorRepository extends AuthorRepository, CrudRepository<Author, Long> {
+public interface SpringDataAuthorMongoRepository extends AuthorRepository, CrudRepository<Author, Long> {
     @Override
     Optional<Author> findByAuthorNumber(Long authorNumber);
 

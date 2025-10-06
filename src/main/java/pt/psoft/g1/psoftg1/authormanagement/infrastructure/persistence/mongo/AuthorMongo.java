@@ -1,4 +1,4 @@
-package pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.persistence.mongo;
+package pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.mongo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
