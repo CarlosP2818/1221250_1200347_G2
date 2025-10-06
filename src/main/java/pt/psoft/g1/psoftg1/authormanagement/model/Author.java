@@ -8,17 +8,24 @@ import pt.psoft.g1.psoftg1.authormanagement.services.UpdateAuthorRequest;
 import pt.psoft.g1.psoftg1.exceptions.ConflictException;
 import pt.psoft.g1.psoftg1.shared.model.EntityWithPhoto;
 import pt.psoft.g1.psoftg1.shared.model.Name;
+
+@Entity
 @Getter
 @Setter
 public class Author extends EntityWithPhoto {
-    private Long pk;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "AUTHOR_NUMBER")
+    @Getter
     private Long authorNumber;
 
+    @Version
     private long version;
 
+    @Embedded
     private Name name;
 
+    @Embedded
     private Bio bio;
 
     public void setName(String name) {
@@ -74,4 +81,3 @@ public class Author extends EntityWithPhoto {
         return this.bio.toString();
     }
 }
-

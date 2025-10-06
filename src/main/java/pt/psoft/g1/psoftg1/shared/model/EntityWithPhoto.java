@@ -37,4 +37,9 @@ public abstract class EntityWithPhoto {
             }
         }
     }
+
+    @Nullable
+    public Photo getPhoto() {
+        return photo;
+    }
 }
