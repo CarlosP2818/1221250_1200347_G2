@@ -14,18 +14,13 @@ import java.time.LocalDate;
  * <p>
  * It stores the year of the lending and a sequencial number, and a string combining these two.
  * @author  rmfranca*/
-@Embeddable
-public class LendingNumber implements Serializable {
+public class LendingNumber {
 
     /**
      * Natural key of a {@code Lending}.
      * <p>
      * The string is constructed based on the values of {@code year} and {@code sequencial} (e.g.: 2024/23).
      */
-    @Column(name = "LENDING_NUMBER", length = 32)
-    @NotNull
-    @NotBlank
-    @Size(min = 6, max = 32)
     private String lendingNumber;
 
 
