@@ -11,6 +11,6 @@ public interface SpringDataAuthorRepository extends JpaRepository<AuthorJpa, Lon
 
     List<AuthorJpa> findByName_NameStartsWith(String name);
 
-    List<AuthorJpa> findByName_Name(String name);
+    List<AuthorJpa> findByName_Name(String name); // Queries that require Book/Lending mappings (top/co-authors) will be added once their JPA models exist.
 }
 
