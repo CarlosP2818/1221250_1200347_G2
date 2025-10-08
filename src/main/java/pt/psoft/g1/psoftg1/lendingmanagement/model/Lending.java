@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.StaleObjectStateException;
 import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.jpa.BookJpa;
 import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.repositories.impl.jpa.BookJpaMapper;
@@ -26,8 +25,9 @@ import java.util.Optional;
  * <p>It is identified in the system by an auto-generated {@code id}, and has a unique-constrained
  * natural key ({@code LendingNumber}) with its own business rules.
  * @author  rmfranca*/
-@Setter
-@Getter
+@Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames={"LENDING_NUMBER"})})
 public class Lending {
 
     /**
@@ -39,6 +39,8 @@ public class Lending {
      * exposed.
      * @author pgsousa
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pk;
 
     /**
@@ -52,24 +54,34 @@ public class Lending {
     /**
      * {@code Book} associated with this {@code Lending}.
      * */
+    @NotNull
     @Getter
-    private Book book;
+    @ManyToOne(fetch=FetchType.EAGER, optional = false)
+    private BookJpa book;
 
     /**
      * {@code Reader} associated with this {@code Lending}.
      **/
+    @NotNull
     @Getter
+    @ManyToOne(fetch=FetchType.EAGER, optional = false)
     private ReaderDetails readerDetails;
 
     /**
      * Date of this {@code Lending}'s creation.
      * */
+    @NotNull
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.DATE)
     @Getter
     private LocalDate startDate;
 
     /**
      * Date this {@code Lending} is to be returned.
      * */
+    @NotNull
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     @Getter
     private LocalDate limitDate;
 
@@ -78,6 +90,7 @@ public class Lending {
      * as the lending can never begin with the book already returned. The {@code null} value is used to
      * check if a book has been returned.
      * */
+    @Temporal(TemporalType.DATE)
     @Getter
     private LocalDate returnedDate;
 
@@ -85,6 +98,7 @@ public class Lending {
     /**
      * Version of the object, to handle concurrency of accesses.
      * */
+    @Version
     @Getter
     private long version;
 
@@ -92,10 +106,14 @@ public class Lending {
      * Optional commentary written by a reader when the book is returned.
      * This field is initialized as null as the lending can never begin with the book already returned
      * */
+    @Size(min = 0, max = 1024)
+    @Column(length = 1024)
     private String commentary = null;
 
+    @Transient
     private Integer daysUntilReturn;
 
+    @Transient
     private Integer daysOverdue;
 
     @Getter
@@ -115,7 +133,7 @@ public class Lending {
      * */
     public Lending(Book book, ReaderDetails readerDetails, int seq, int lendingDuration, int fineValuePerDayInCents){
         try {
-            this.book = Objects.requireNonNull(book);
+            this.book = BookJpaMapper.toJpa(Objects.requireNonNull(book));
             this.readerDetails = Objects.requireNonNull(readerDetails);
         }catch (NullPointerException e){
             throw new IllegalArgumentException("Null objects passed to lending");
@@ -215,7 +233,7 @@ public class Lending {
 
 
     /**Protected empty constructor for ORM only.*/
-    public Lending() {}
+    protected Lending() {}
 
     /**Factory method meant to be only used in bootstrapping.*/
     public static Lending newBootstrappingLending(Book book,
@@ -229,7 +247,7 @@ public class Lending {
         Lending lending = new Lending();
 
         try {
-            lending.book = Objects.requireNonNull(book);
+            lending.book = BookJpaMapper.toJpa(Objects.requireNonNull(book));
             lending.readerDetails = Objects.requireNonNull(readerDetails);
         }catch (NullPointerException e){
             throw new IllegalArgumentException("Null objects passed to lending");

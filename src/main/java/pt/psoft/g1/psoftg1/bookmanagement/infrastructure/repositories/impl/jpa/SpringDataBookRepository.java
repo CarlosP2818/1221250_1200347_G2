@@ -18,7 +18,7 @@ public interface SpringDataBookRepository extends JpaRepository<BookJpa, Long> {
 
     @Query("SELECT new pt.psoft.g1.psoftg1.bookmanagement.services.BookCountDTO(BookJpa , COUNT(l)) " +
             "FROM BookJpa b " +
-            "JOIN LendingJpa l ON l.book = b " +
+            "JOIN Lending l ON l.book = b " +
             "WHERE l.startDate > :oneYearAgo " +
             "GROUP BY b " +
             "ORDER BY COUNT(l) DESC")
