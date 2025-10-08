@@ -11,21 +11,21 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
-@Configuration
-@EnableCaching
+//@Configuration
+//@EnableCaching
 public class RedisCacheConfig {
-
-    @Bean
-    public RedisCacheConfiguration cacheConfiguration() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule()); // Suporte para LocalDateTime
-        mapper.findAndRegisterModules(); // detecta outros módulos
-
-        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(mapper);
-
-        return RedisCacheConfiguration.defaultCacheConfig()
-                .serializeValuesWith(
-                        RedisSerializationContext.SerializationPair.fromSerializer(serializer)
-                );
-    }
+// Login not working because of caching
+//    @Bean
+//    public RedisCacheConfiguration cacheConfiguration() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.registerModule(new JavaTimeModule()); // Suporte para LocalDateTime
+//        mapper.findAndRegisterModules(); // detecta outros módulos
+//
+//        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(mapper);
+//
+//        return RedisCacheConfiguration.defaultCacheConfig()
+//                .serializeValuesWith(
+//                        RedisSerializationContext.SerializationPair.fromSerializer(serializer)
+//                );
+//    }
 }
