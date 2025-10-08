@@ -39,9 +39,5 @@ public interface SpringDataLendingRepository extends CrudRepository<LendingJpa, 
             nativeQuery = true)
     Double getAvgLendingDurationByIsbn(@Param("isbn") String isbn);
 
-    List<Lending> getOverdue(Page page);
-
-    List<Lending> searchLendings(Page page, String readerNumber, String isbn, Boolean returned, LocalDate startDate, LocalDate endDate);
-
     // List<ReaderAverageDto> getAverageMonthlyPerReader(LocalDate startDate, LocalDate endDate);
 }
