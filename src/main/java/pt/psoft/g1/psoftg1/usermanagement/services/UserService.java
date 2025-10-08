@@ -21,6 +21,7 @@
 package pt.psoft.g1.psoftg1.usermanagement.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,6 +64,7 @@ public class UserService implements UserDetailsService {
 	public List<User> findByNameLike(String name) { return this.userRepo.findByNameNameContains(name); }
 
 	@Transactional
+	@CacheEvict(value = "users", key = "#request.username")
 	public User create(final CreateUserRequest request) {
 		if (userRepo.findByUsername(request.getUsername()).isPresent()) {
 			throw new ConflictException("Username already exists!");
