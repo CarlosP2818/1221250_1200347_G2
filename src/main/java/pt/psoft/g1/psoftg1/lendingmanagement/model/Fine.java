@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
+import pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.persistence.jpa.LendingJpa;
+import pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.repositories.impl.LendingJpaMapper;
 
 import java.util.Objects;
 
@@ -29,7 +31,7 @@ public class Fine {
     @Setter
     @OneToOne(optional = false, orphanRemoval = true)
     @JoinColumn(name = "lending_pk", nullable = false, unique = true)
-    private Lending lending;
+    private LendingJpa lending;
 
     /**
      * Constructs a new {@code Fine} object. Sets the current value of the fine,
@@ -41,7 +43,7 @@ public class Fine {
             throw new IllegalArgumentException("Lending is not overdue");
         fineValuePerDayInCents = lending.getFineValuePerDayInCents();
         centsValue = fineValuePerDayInCents * lending.getDaysDelayed();
-        this.lending = Objects.requireNonNull(lending);
+        this.lending = LendingJpaMapper.toJpa(Objects.requireNonNull(lending));
     }
 
     /**Protected empty constructor for ORM only.*/
