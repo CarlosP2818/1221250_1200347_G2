@@ -1,4 +1,4 @@
-package pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.repositories.impl.jpa;
+package pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.repositories.impl;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,7 +18,7 @@ public interface SpringDataLendingRepository extends CrudRepository<LendingJpa, 
 
     @Query("SELECT l FROM LendingJpa l " +
             "JOIN BookJpa b ON l.book.pk = b.pk " +
-            "JOIN ReaderDetails r ON l.readerDetails.pk = r.pk " +
+            "JOIN ReaderDetailsJpa r ON l.readerDetails.pk = r.pk " +
             "WHERE b.isbn.isbn = :isbn AND r.readerNumber.readerNumber = :readerNumber")
     List<LendingJpa> listByReaderNumberAndIsbn(@Param("readerNumber") String readerNumber, @Param("isbn") String isbn);
 
@@ -26,7 +26,7 @@ public interface SpringDataLendingRepository extends CrudRepository<LendingJpa, 
     int getCountFromCurrentYear();
 
     @Query("SELECT l FROM LendingJpa l " +
-            "JOIN ReaderDetails r ON l.readerDetails.pk = r.pk " +
+            "JOIN ReaderDetailsJpa r ON l.readerDetails.pk = r.pk " +
             "WHERE r.readerNumber.readerNumber = :readerNumber AND l.returnedDate IS NULL")
     List<LendingJpa> listOutstandingByReaderNumber(@Param("readerNumber") String readerNumber);
 

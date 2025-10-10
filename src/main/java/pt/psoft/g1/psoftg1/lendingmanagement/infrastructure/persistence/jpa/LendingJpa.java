@@ -6,6 +6,7 @@ import lombok.Setter;
 import pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.persistence.jpa.LendingNumberEmbeddable;
 import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.jpa.BookJpa;
 import pt.psoft.g1.psoftg1.readermanagement.model.ReaderDetails;
+import pt.psoft.g1.psoftg1.readermanagement.model.ReaderDetailsJpa;
 
 import java.time.LocalDate;
 
@@ -28,7 +29,7 @@ public class LendingJpa {
     private BookJpa book;
 
     @ManyToOne(fetch=FetchType.EAGER, optional = false)
-    private ReaderDetails readerDetails;
+    private ReaderDetailsJpa readerDetails;
 
     @Column(nullable = false, updatable = false)
     private LocalDate startDate;
@@ -56,7 +57,7 @@ public class LendingJpa {
 
     protected LendingJpa() {}
 
-    public LendingJpa(LendingNumberEmbeddable lendingNumber, BookJpa book, ReaderDetails readerDetails,
+    public LendingJpa(LendingNumberEmbeddable lendingNumber, BookJpa book, ReaderDetailsJpa readerDetails,
                       LocalDate startDate, LocalDate limitDate, LocalDate returnedDate,
                       String commentary, int fineValuePerDayInCents) {
         this.lendingNumber = lendingNumber;

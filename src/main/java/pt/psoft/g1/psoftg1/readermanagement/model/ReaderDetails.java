@@ -15,50 +15,40 @@ import pt.psoft.g1.psoftg1.usermanagement.model.Reader;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Entity
-@Table(name = "READER_DETAILS")
 public class ReaderDetails extends EntityWithPhoto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pk;
 
     @Getter
     @Setter
-    @OneToOne
     private Reader reader;
 
     private ReaderNumber readerNumber;
 
-    @Embedded
     @Getter
     private BirthDate birthDate;
 
-    @Embedded
     private PhoneNumber phoneNumber;
 
     @Setter
     @Getter
-    @Basic
     private boolean gdprConsent;
 
     @Setter
-    @Basic
     @Getter
     private boolean marketingConsent;
 
     @Setter
-    @Basic
     @Getter
     private boolean thirdPartySharingConsent;
 
-    @Version
     @Getter
     private Long version;
 
+    @Getter
     @Setter
-    @ManyToMany
-    private List<GenreJpa> interestList;
+    private List<Genre> interestList;
 
     public ReaderDetails(int readerNumber, Reader reader, String birthDate, String phoneNumber, boolean gdpr, boolean marketing, boolean thirdParty, String photoURI, List<Genre> interestList) {
         if(reader == null || phoneNumber == null) {
@@ -79,11 +69,7 @@ public class ReaderDetails extends EntityWithPhoto {
         setPhotoInternal(photoURI);
         setMarketingConsent(marketing);
         setThirdPartySharingConsent(thirdParty);
-        if(interestList == null) {
-            setInterestList(new ArrayList<GenreJpa>());
-        }else {
-            setInterestList(interestList.stream().map(GenreJpaMapper::toJpa).toList());
-        }
+        setInterestList(Objects.requireNonNullElseGet(interestList, ArrayList::new));
     }
 
     private void setPhoneNumber(PhoneNumber number) {
@@ -152,7 +138,7 @@ public class ReaderDetails extends EntityWithPhoto {
         }
 
         if(interestList != null) {
-            this.interestList = interestList.stream().map(GenreJpaMapper::toJpa).toList();
+            this.interestList = interestList;
         }
     }
 
@@ -162,10 +148,6 @@ public class ReaderDetails extends EntityWithPhoto {
         }
 
         setPhotoInternal(null);
-    }
-
-    public List<Genre> getInterestList() {
-        return interestList.stream().map(GenreJpaMapper::toDomain).toList();
     }
 
     public String getReaderNumber(){

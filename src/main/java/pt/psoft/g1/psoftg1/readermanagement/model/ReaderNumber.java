@@ -7,9 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 
-@Embeddable
-public class ReaderNumber implements Serializable {
-    @Column(name = "READER_NUMBER")
+public class ReaderNumber {
     private String readerNumber;
 
     public ReaderNumber(int year, int number) {

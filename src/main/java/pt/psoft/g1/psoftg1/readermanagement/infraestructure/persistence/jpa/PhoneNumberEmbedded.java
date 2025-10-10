@@ -1,15 +1,18 @@
-package pt.psoft.g1.psoftg1.readermanagement.model;
+package pt.psoft.g1.psoftg1.readermanagement.infraestructure.persistence.jpa;
 
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
-public class PhoneNumber {
+@Getter
+@Embeddable
+public class PhoneNumberEmbedded {
     String phoneNumber;
 
-    public PhoneNumber(String phoneNumber) {
+    public PhoneNumberEmbedded(String phoneNumber) {
         setPhoneNumber(phoneNumber);
     }
 
-    protected PhoneNumber() {}
+    protected PhoneNumberEmbedded() {}
 
     private void setPhoneNumber(String number) {
         if(!(number.startsWith("9") || number.startsWith("2")) || number.length() != 9) {
@@ -17,9 +20,5 @@ public class PhoneNumber {
         }
 
         this.phoneNumber = number;
-    }
-
-    public String toString() {
-        return this.phoneNumber;
     }
 }
