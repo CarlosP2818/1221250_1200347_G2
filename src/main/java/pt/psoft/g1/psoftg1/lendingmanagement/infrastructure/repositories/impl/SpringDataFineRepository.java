@@ -1,20 +1,21 @@
 package pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.repositories.impl;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import pt.psoft.g1.psoftg1.lendingmanagement.model.Fine;
+import pt.psoft.g1.psoftg1.lendingmanagement.model.FineJpa;
 import pt.psoft.g1.psoftg1.lendingmanagement.repositories.FineRepository;
 
 import java.util.Optional;
 
 
-public interface SpringDataFineRepository extends FineRepository, CrudRepository<Fine, Long> {
+public interface SpringDataFineRepository extends JpaRepository<FineJpa, Long> {
 
-    @Override
     @Query("SELECT f " +
-            "FROM Fine f " +
+            "FROM FineJpa f " +
             "JOIN LendingJpa l ON f.lending.pk = l.pk " +
             "WHERE l.lendingNumber.lendingNumber = :lendingNumber")
-    Optional<Fine> findByLendingNumber(String lendingNumber);
+    Optional<FineJpa> findByLendingNumber(String lendingNumber);
 
 }

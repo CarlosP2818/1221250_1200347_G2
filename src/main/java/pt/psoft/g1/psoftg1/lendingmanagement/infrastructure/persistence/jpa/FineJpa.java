@@ -14,29 +14,34 @@ import java.util.Objects;
  * <p>It stores its current value, and the associated {@code Lending}.
  * @author  rmfranca*/
 @Getter
-public class Fine {
+@Entity
+public class FineJpa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pk;
 
+    @PositiveOrZero
+    @Column(updatable = false)
     private int fineValuePerDayInCents;
 
+    /**Fine value in Euro cents*/
+    @PositiveOrZero
     int centsValue;
 
     @Setter
-    private Lending lending;
+    @OneToOne(optional = false, orphanRemoval = true)
+    @JoinColumn(name = "lending_pk", nullable = false, unique = true)
+    private LendingJpa lending;
 
     /**
      * Constructs a new {@code Fine} object. Sets the current value of the fine,
      * as well as the fine value per day at the time of creation.
      * @param   lending transaction which generates this fine.
      * */
-    public Fine(Lending lending) {
-        if(lending.getDaysDelayed() <= 0)
-            throw new IllegalArgumentException("Lending is not overdue");
-        fineValuePerDayInCents = lending.getFineValuePerDayInCents();
-        centsValue = fineValuePerDayInCents * lending.getDaysDelayed();
+    public FineJpa(LendingJpa lending) {
         this.lending = Objects.requireNonNull(lending);
     }
 
     /**Protected empty constructor for ORM only.*/
-    public Fine() {}
+    protected FineJpa() {}
 }

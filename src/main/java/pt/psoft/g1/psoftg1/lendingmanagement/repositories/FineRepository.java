@@ -1,6 +1,7 @@
 package pt.psoft.g1.psoftg1.lendingmanagement.repositories;
 
 import pt.psoft.g1.psoftg1.lendingmanagement.model.Fine;
+import pt.psoft.g1.psoftg1.lendingmanagement.model.FineJpa;
 
 import java.util.Optional;
 
