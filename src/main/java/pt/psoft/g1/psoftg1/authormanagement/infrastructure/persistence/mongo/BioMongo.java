@@ -13,7 +13,7 @@ public class BioMongo {
     @Size(min = 1, max = BIO_MAX_LENGTH)
     private String bio;
 
-    public void BioMongo(String bio) {
+    public BioMongo(String bio) {
         setBioMongo(bio);
     }
 
@@ -33,9 +33,5 @@ public class BioMongo {
     @Override
     public String toString() {
         return bio;
-    }
-
-    public BioMongo(String bio) {
-        this.bio = bio;
     }
 }

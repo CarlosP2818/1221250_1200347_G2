@@ -33,9 +33,9 @@ public class Book extends EntityWithPhoto {
 
     Description description;
 
-    private void setTitle(String title) {this.title = new Title(title);}
+    public void setTitle(String title) {this.title = new Title(title);}
 
-    private void setIsbn(String isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = new Isbn(isbn);
     }
 
@@ -64,7 +64,7 @@ public class Book extends EntityWithPhoto {
         setPhotoInternal(photoURI);
     }
 
-    protected Book() {
+    public Book() {
         // got ORM only
     }
 

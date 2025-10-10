@@ -25,7 +25,7 @@ public class AuthorMongoMapper {
         return author;
     }
 
-    public AuthorMongo toEntity(Author domain) {
+    public static AuthorMongo toEntity(Author domain) {
         if (domain == null) return null;
 
         AuthorMongo entity = new AuthorMongo(
