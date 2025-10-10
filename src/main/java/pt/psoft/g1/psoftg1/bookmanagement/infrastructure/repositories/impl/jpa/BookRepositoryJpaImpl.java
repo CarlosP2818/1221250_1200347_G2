@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Profile("sql")
 public class BookRepositoryJpaImpl implements BookRepository {
     private final SpringDataBookRepository jpaRepository;
     private final EntityManager em;
