@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
-import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.repositories.impl.jpa.BookJpaMapper;
 import pt.psoft.g1.psoftg1.readermanagement.model.ReaderDetails;
 import pt.psoft.g1.psoftg1.readermanagement.repositories.ReaderRepository;
 import pt.psoft.g1.psoftg1.readermanagement.services.ReaderBookCountDTO;
@@ -24,29 +23,29 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Repository
 @Profile("sql")
-public class ReaderRepositoryJpaImpl implements ReaderRepository {
+public class ReaderDetailsRepositoryJpaImpl implements ReaderRepository {
     private final EntityManager em;
 
-    private final SpringDataReaderRepository repo;
+    private final SpringDataReaderDetailsRepository repo;
 
     @Override
     public Optional<ReaderDetails> findByReaderNumber(String readerNumber) {
-        return repo.findByReaderNumber(readerNumber).stream().map(ReaderJpaMapper::toDomain).findFirst();
+        return repo.findByReaderNumber(readerNumber).stream().map(ReaderDetailsJpaMapper::toDomain).findFirst();
     }
 
     @Override
     public List<ReaderDetails> findByPhoneNumber(String phoneNumber) {
-        return repo.findByPhoneNumber(phoneNumber).stream().map(ReaderJpaMapper::toDomain).toList();
+        return repo.findByPhoneNumber(phoneNumber).stream().map(ReaderDetailsJpaMapper::toDomain).toList();
     }
 
     @Override
     public Optional<ReaderDetails> findByUsername(String username) {
-        return repo.findByUsername(username).stream().map(ReaderJpaMapper::toDomain).findFirst();
+        return repo.findByUsername(username).stream().map(ReaderDetailsJpaMapper::toDomain).findFirst();
     }
 
     @Override
     public Optional<ReaderDetails> findByUserId(Long userId) {
-        return repo.findByUserId(userId).stream().map(ReaderJpaMapper::toDomain).findFirst();
+        return repo.findByUserId(userId).stream().map(ReaderDetailsJpaMapper::toDomain).findFirst();
     }
 
     @Override
@@ -56,13 +55,13 @@ public class ReaderRepositoryJpaImpl implements ReaderRepository {
 
     @Override
     public ReaderDetails save(ReaderDetails readerDetails) {
-        var saved = repo.save(ReaderJpaMapper.toJpa(readerDetails));
-        return ReaderJpaMapper.toDomain(saved);
+        var saved = repo.save(ReaderDetailsJpaMapper.toJpa(readerDetails));
+        return ReaderDetailsJpaMapper.toDomain(saved);
     }
 
     @Override
     public Iterable<ReaderDetails> findAll() {
-        return repo.findAll().stream().map(ReaderJpaMapper::toDomain).toList();
+        return repo.findAll().stream().map(ReaderDetailsJpaMapper::toDomain).toList();
     }
 
     @Override
@@ -77,7 +76,7 @@ public class ReaderRepositoryJpaImpl implements ReaderRepository {
 
     @Override
     public void delete(ReaderDetails readerDetails) {
-        repo.delete(ReaderJpaMapper.toJpa(readerDetails));
+        repo.delete(ReaderDetailsJpaMapper.toJpa(readerDetails));
     }
 
     @Override

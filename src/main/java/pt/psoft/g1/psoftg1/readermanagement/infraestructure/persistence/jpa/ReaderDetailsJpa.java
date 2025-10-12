@@ -7,6 +7,9 @@ import pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.jpa.GenreJ
 import pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl.GenreJpaMapper;
 import pt.psoft.g1.psoftg1.genremanagement.model.Genre;
 import pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa.EntityWithPhotoEmbeddable;
+import pt.psoft.g1.psoftg1.usermanagement.infrastructure.persistence.jpa.ReaderJpa;
+import pt.psoft.g1.psoftg1.usermanagement.infrastructure.repositories.impl.ReaderJpaMapper;
+import pt.psoft.g1.psoftg1.usermanagement.infrastructure.repositories.impl.UserJpaMapper;
 import pt.psoft.g1.psoftg1.usermanagement.model.Reader;
 
 import java.nio.file.InvalidPathException;
@@ -23,7 +26,7 @@ public class ReaderDetailsJpa extends EntityWithPhotoEmbeddable {
     @Getter
     @Setter
     @OneToOne
-    private Reader reader;
+    private ReaderJpa reader;
 
     @Getter
     private ReaderNumberEmbedded readerNumber;
@@ -68,7 +71,7 @@ public class ReaderDetailsJpa extends EntityWithPhotoEmbeddable {
             throw new IllegalArgumentException("Readers must agree with the GDPR rules");
         }
 
-        setReader(reader);
+        setReader(ReaderJpaMapper.toJpa(reader));
         setReaderNumber(new ReaderNumberEmbedded(readerNumber));
         setPhoneNumber(new PhoneNumberEmbedded(phoneNumber));
         setBirthDate(new BirthDateEmbedded(birthDate));

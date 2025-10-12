@@ -7,7 +7,7 @@ import pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.persistence.jpa.Lend
 import pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.persistence.jpa.LendingNumberEmbeddable;
 import pt.psoft.g1.psoftg1.lendingmanagement.model.Lending;
 import pt.psoft.g1.psoftg1.lendingmanagement.model.LendingNumber;
-import pt.psoft.g1.psoftg1.readermanagement.infraestructure.repositories.impl.ReaderJpaMapper;
+import pt.psoft.g1.psoftg1.readermanagement.infraestructure.repositories.impl.ReaderDetailsJpaMapper;
 
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class LendingJpaMapper {
         lending.setPk(jpa.getPk());
         lending.setLendingNumber(new LendingNumber(jpa.getLendingNumber().getLendingNumber()));
         lending.setBook(BookJpaMapper.toDomain(jpa.getBook()));
-        lending.setReaderDetails(ReaderJpaMapper.toDomain(jpa.getReaderDetails()));
+        lending.setReaderDetails(ReaderDetailsJpaMapper.toDomain(jpa.getReaderDetails()));
         lending.setStartDate(jpa.getStartDate());
         lending.setLimitDate(jpa.getLimitDate());
         lending.setReturnedDate(jpa.getReturnedDate());
@@ -53,7 +53,7 @@ public class LendingJpaMapper {
         return new LendingJpa(
                 new LendingNumberEmbeddable(lending.getLendingNumber()),
                 BookJpaMapper.toJpa(lending.getBook()),
-                ReaderJpaMapper.toJpa(lending.getReaderDetails()),
+                ReaderDetailsJpaMapper.toJpa(lending.getReaderDetails()),
                 lending.getStartDate(),
                 lending.getLimitDate(),
                 lending.getReturnedDate(),

@@ -46,71 +46,27 @@ import lombok.Setter;
  * Based on https://github.com/Yoh0xFF/java-spring-security-example
  *
  */
-@Entity
-@Table(name = "T_USER")
-@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
 
-	private static final long serialVersionUID = 1L;
-
 	// database primary key
-	@Id
-	@GeneratedValue
 	@Getter
-	@Column(name="USER_ID")
 	private Long id;
-
-	// optimistic lock concurrency control
-	@Version
-	private Long version;
-
-	// auditing info
-	@CreatedDate
-	@Column(nullable = false, updatable = false)
-	@Getter
-	private LocalDateTime createdAt;
-
-	// auditing info
-	@LastModifiedDate
-	@Column(nullable = false)
-	@Getter
-	private LocalDateTime modifiedAt;
-
-	// auditing info
-	@CreatedBy
-	@Column(nullable = false, updatable = false)
-	@Getter
-	private String createdBy;
-
-	// auditing info
-	@LastModifiedBy
-	@Column(nullable = false)
-	private String modifiedBy;
 
 	@Setter
 	@Getter
 	private boolean enabled = true;
 
 	@Setter
-    @Column(unique = true, /*updatable = false,*/ nullable = false)
-	@Email
 	@Getter
-	@NotNull
-	@NotBlank
 	private String username;
 
-	@Column(nullable = false)
 	@Getter
-	@NotNull
-	@NotBlank
 	private String password;
 
 	@Getter
 //	@Setter
-	@Embedded
 	private Name name;
 
-	@ElementCollection
 	@Getter
 	private final Set<Role> authorities = new HashSet<>();
 

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface SpringDataReaderRepository extends JpaRepository<ReaderDetailsJpa, Long> {
+public interface SpringDataReaderDetailsRepository extends JpaRepository<ReaderDetailsJpa, Long> {
     @Query("SELECT r " +
             "FROM ReaderDetailsJpa r " +
             "WHERE r.readerNumber.readerNumber = :readerNumber")
@@ -29,20 +29,20 @@ public interface SpringDataReaderRepository extends JpaRepository<ReaderDetailsJ
 
     @Query("SELECT r " +
             "FROM ReaderDetailsJpa r " +
-            "JOIN User u ON r.reader.id = u.id " +
+            "JOIN UserJpa u ON r.reader.id = u.id " +
             "WHERE u.username = :username")
     Optional<ReaderDetailsJpa> findByUsername(@Param("username") @NotNull String username);
 
     @Query("SELECT r " +
             "FROM ReaderDetailsJpa r " +
-            "JOIN User u ON r.reader.id = u.id " +
+            "JOIN UserJpa u ON r.reader.id = u.id " +
             "WHERE u.id = :userId")
     Optional<ReaderDetailsJpa> findByUserId(@Param("userId") @NotNull Long userId);
 
 
     @Query("SELECT COUNT (rd) " +
             "FROM ReaderDetailsJpa rd " +
-            "JOIN User u ON rd.reader.id = u.id " +
+            "JOIN UserJpa u ON rd.reader.id = u.id " +
             "WHERE YEAR(u.createdAt) = YEAR(CURRENT_DATE)")
     int getCountFromCurrentYear();
 

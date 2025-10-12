@@ -1,13 +1,17 @@
-package pt.psoft.g1.psoftg1.usermanagement.model;
+package pt.psoft.g1.psoftg1.usermanagement.infrastructure.persistence.jpa;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import pt.psoft.g1.psoftg1.shared.model.Name;
+import pt.psoft.g1.psoftg1.usermanagement.model.Role;
 
-public class Librarian extends User {
-    protected Librarian() {
+@Entity
+@DiscriminatorValue("LIBRARIAN")
+public class LibrarianJpa  extends UserJpa {
+    protected LibrarianJpa() {
         // for ORM only
     }
-    public Librarian(String username, String password) {
+    public LibrarianJpa(String username, String password) {
         super(username, password);
     }
 
@@ -22,8 +26,8 @@ public class Librarian extends User {
      * @return
      */
 
-    public static Librarian newLibrarian(final String username, final String password, final String name) {
-        final var u = new Librarian(username, password);
+    public static LibrarianJpa newLibrarian(final String username, final String password, final String name) {
+        final var u = new LibrarianJpa(username, password);
         u.setName(name);
         u.addAuthority(new Role(Role.LIBRARIAN));
         return u;

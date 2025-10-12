@@ -4,17 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pt.psoft.g1.psoftg1.readermanagement.infraestructure.persistence.jpa.ReaderDetailsJpa;
 import pt.psoft.g1.psoftg1.readermanagement.model.ReaderDetails;
+import pt.psoft.g1.psoftg1.usermanagement.model.Reader;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component
-public class ReaderJpaMapper {
-    private static SpringDataReaderRepository repo;
+public class ReaderDetailsJpaMapper {
+    private static SpringDataReaderDetailsRepository repo;
 
     @Autowired
-    public ReaderJpaMapper(SpringDataReaderRepository injectedRepo) {
-        ReaderJpaMapper.repo = injectedRepo;
+    public ReaderDetailsJpaMapper(SpringDataReaderDetailsRepository injectedRepo) {
+        ReaderDetailsJpaMapper.repo = injectedRepo;
     }
 
     public static ReaderDetails toDomain(ReaderDetailsJpa jpa) {
@@ -22,7 +23,7 @@ public class ReaderJpaMapper {
 
         return new ReaderDetails(
                 Integer.parseInt(jpa.getReaderNumber().getReaderNumber().split("/")[1]),
-                jpa.getReader(),
+                new Reader(jpa.getReader().getUsername(),jpa.getReader().getPassword()),
                 jpa.getBirthDate().getBirthDate().toString(),
                 jpa.getPhoneNumber().getPhoneNumber(),
                 jpa.isGdprConsent(),
