@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import pt.psoft.g1.psoftg1.bookmanagement.model.Book;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Profile("sql")
 public class LendingRepositoryJpaImpl implements LendingRepository {
 
     private final SpringDataLendingRepository jpaRepository;

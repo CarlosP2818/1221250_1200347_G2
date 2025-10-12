@@ -2,16 +2,17 @@ package pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.repositories.impl;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import pt.psoft.g1.psoftg1.lendingmanagement.model.Fine;
-import pt.psoft.g1.psoftg1.lendingmanagement.model.Lending;
 import pt.psoft.g1.psoftg1.lendingmanagement.repositories.FineRepository;
 
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class FineRepositoryImpl implements FineRepository {
+@Profile("sql")
+public class FineRepositoryJpaImpl implements FineRepository {
 
     private final SpringDataFineRepository jpaRepository;
     private final EntityManager em;

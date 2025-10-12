@@ -1,4 +1,4 @@
-package pt.psoft.g1.psoftg1.shared.model;
+package pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
@@ -6,13 +6,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
+import pt.psoft.g1.psoftg1.shared.model.Photo;
 
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 
 @Getter
-public abstract class EntityWithPhoto {
-
+@MappedSuperclass
+public abstract class EntityWithPhotoEmbeddable {
+    @Nullable
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="photo_id")
     protected Photo photo;
 
     //This method is used by the mapper in order to set the photo. This will call the setPhotoInternal method that
@@ -35,4 +39,8 @@ public abstract class EntityWithPhoto {
         }
     }
 
+    @Nullable
+    public Photo getPhoto() {
+        return photo;
+    }
 }

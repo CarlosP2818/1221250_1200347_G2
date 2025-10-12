@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import pt.psoft.g1.psoftg1.readermanagement.model.ReaderDetailsJpa;
+import pt.psoft.g1.psoftg1.readermanagement.infraestructure.persistence.jpa.ReaderDetailsJpa;
 import pt.psoft.g1.psoftg1.readermanagement.model.ReaderDetails;
 
 import org.springframework.data.domain.Pageable;

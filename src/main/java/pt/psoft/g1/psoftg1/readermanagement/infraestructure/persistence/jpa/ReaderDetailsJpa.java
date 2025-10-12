@@ -1,18 +1,12 @@
-package pt.psoft.g1.psoftg1.readermanagement.model;
+package pt.psoft.g1.psoftg1.readermanagement.infraestructure.persistence.jpa;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import pt.psoft.g1.psoftg1.exceptions.ConflictException;
 import pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.jpa.GenreJpa;
 import pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl.GenreJpaMapper;
 import pt.psoft.g1.psoftg1.genremanagement.model.Genre;
-import pt.psoft.g1.psoftg1.readermanagement.infraestructure.persistence.jpa.BirthDateEmbedded;
-import pt.psoft.g1.psoftg1.readermanagement.infraestructure.persistence.jpa.PhoneNumberEmbedded;
-import pt.psoft.g1.psoftg1.readermanagement.infraestructure.persistence.jpa.ReaderNumberEmbedded;
-import pt.psoft.g1.psoftg1.readermanagement.services.UpdateReaderRequest;
-import pt.psoft.g1.psoftg1.shared.model.EntityWithPhoto;
+import pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa.EntityWithPhotoEmbeddable;
 import pt.psoft.g1.psoftg1.usermanagement.model.Reader;
 
 import java.nio.file.InvalidPathException;
@@ -21,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "READER_DETAILS")
-public class ReaderDetailsJpa extends EntityWithPhoto {
+public class ReaderDetailsJpa extends EntityWithPhotoEmbeddable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pk;

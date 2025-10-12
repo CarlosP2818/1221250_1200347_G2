@@ -1,6 +1,7 @@
 package pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Profile("sql")
 public class GenreRepositoryJpaImpl implements GenreRepository {
     private final SpringDataGenreRepository jpaRepository;
 
