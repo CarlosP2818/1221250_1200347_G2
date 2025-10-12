@@ -29,7 +29,7 @@ public class BookJpaMapper {
     public static Book toDomain(BookJpa jpa) {
         if (jpa == null) return null;
 
-        return new Book(
+        Book book = new Book(
                 jpa.getIsbn().getIsbn(),
                 jpa.getTitle().getTitle(),
                 jpa.getDescription() != null ? jpa.getDescription().toString() : null,
@@ -37,6 +37,9 @@ public class BookJpaMapper {
                 jpa.getAuthors().stream().map(AuthorJpaMapper::toDomain).toList(),
                 jpa.getPhoto() != null ? jpa.getPhoto().getPhotoFile() : null
         );
+
+        book.setVersion(jpa.getVersion());
+        return book;
     }
 
     public static BookJpa toJpa(Book book) {

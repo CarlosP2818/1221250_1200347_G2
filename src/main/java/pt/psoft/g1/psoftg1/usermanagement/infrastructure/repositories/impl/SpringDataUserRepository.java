@@ -51,23 +51,23 @@ import lombok.RequiredArgsConstructor;
  *
  */
 @Repository
-@CacheConfig(cacheNames = "users")
+//@CacheConfig(cacheNames = "users")
 public interface SpringDataUserRepository extends JpaRepository<UserJpa, Long> {
 
 	@Override
-	@CacheEvict(allEntries = true)
+	//@CacheEvict(allEntries = true)
 	<S extends UserJpa> List<S> saveAll(Iterable<S> entities);
 
 	@Override
-	@Caching(evict = { @CacheEvict(key = "#p0.id", condition = "#p0.id != null"),
-			@CacheEvict(key = "#p0.username", condition = "#p0.username != null") })
+	//@Caching(evict = { @CacheEvict(key = "#p0.id", condition = "#p0.id != null"),
+			//@CacheEvict(key = "#p0.username", condition = "#p0.username != null") })
 	<S extends UserJpa> S save(S entity);
 
 	/**
 	 * findById searches a specific user and returns an optional
 	 */
 	@Override
-	@Cacheable
+	//@Cacheable
 	Optional<UserJpa> findById(Long objectId);
 
 	/**
@@ -77,17 +77,17 @@ public interface SpringDataUserRepository extends JpaRepository<UserJpa, Long> {
 	 * @param id
 	 * @return
 	 */
-	@Cacheable
+	//@Cacheable
 	default UserJpa getById(final Long id) {
 		final Optional<UserJpa> maybeUser = findById(id);
 		// throws 404 Not Found if the user does not exist or is not enabled
 		return maybeUser.filter(UserJpa::isEnabled).orElseThrow(() -> new NotFoundException(User.class, id));
 	}
 
-	@Cacheable
+	//@Cacheable
 	Optional<UserJpa> findByUsername(String username);
 
-	@Cacheable
+	//@Cacheable
 	List<UserJpa> findByNameName(String name);
 }
 

@@ -50,6 +50,7 @@ public class User implements UserDetails {
 
 	// database primary key
 	@Getter
+	@Setter
 	private Long id;
 
 	@Setter
@@ -83,6 +84,14 @@ public class User implements UserDetails {
 		this.username = username;
 		setPassword(password);
 	}
+
+	public static User fromEncodedPassword(String username, String encodedPassword) {
+		User u = new User();
+		u.username = username;
+		u.password = encodedPassword; // ⚠️ não re-encode
+		return u;
+	}
+
 
 	/**
 	 * factory method. since mapstruct does not handle protected/private setters

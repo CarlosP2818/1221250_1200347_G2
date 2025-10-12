@@ -2,6 +2,7 @@ package pt.psoft.g1.psoftg1.bookmanagement.model;
 
 
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.StaleObjectStateException;
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.bookmanagement.services.UpdateBookRequest;
@@ -18,6 +19,7 @@ public class Book extends EntityWithPhoto {
     long pk;
 
     @Getter
+    @Setter
     private Long version;
 
     Isbn isbn;

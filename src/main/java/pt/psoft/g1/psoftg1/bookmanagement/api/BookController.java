@@ -52,9 +52,9 @@ public class BookController {
     private final BookViewMapper bookViewMapper;
 
     @Operation(summary = "Register a new Book")
-    @PutMapping(value = "/{isbn}")
+    @PutMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<BookView> create( CreateBookRequest resource, @PathVariable("isbn") String isbn) {
+    public ResponseEntity<BookView> create( CreateBookRequest resource) {
 
 
         //Guarantee that the client doesn't provide a link on the body, null = no photo or error
@@ -69,7 +69,7 @@ public class BookController {
 
         Book book;
         try {
-            book = bookService.create(resource, isbn);
+            book = bookService.create(resource);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -21,27 +21,22 @@ public class UserJpaMapper {
     public static User toDomain(UserJpa jpa) {
         if (jpa == null) return null;
 
-        User user = new User(
-                jpa.getUsername(),
-                jpa.getPassword()
-        );
+        User user = User.fromEncodedPassword(jpa.getUsername(), jpa.getPassword());
         user.setEnabled(jpa.isEnabled());
 
-        if (jpa.getName() != null) {
+        if (jpa.getName() != null)
             user.setName(jpa.getName().getName());
-        }
 
-        if (jpa.getAuthorities() != null && !jpa.getAuthorities().isEmpty()) {
+        if (jpa.getAuthorities() != null && !jpa.getAuthorities().isEmpty())
             jpa.getAuthorities().forEach(user::addAuthority);
-        }
 
+        user.setId(jpa.getId());
         return user;
     }
 
     public static UserJpa toJpa(User user) {
         if (user == null) return null;
 
-        // tentar reutilizar se já existir na BD
         if (repo != null) {
             Optional<UserJpa> existing = repo.findByUsername(user.getUsername());
             if (existing.isPresent()) {

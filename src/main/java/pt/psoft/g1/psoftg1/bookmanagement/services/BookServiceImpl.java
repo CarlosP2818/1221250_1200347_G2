@@ -11,6 +11,7 @@ import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.bookmanagement.model.*;
 import pt.psoft.g1.psoftg1.bookmanagement.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
+import pt.psoft.g1.psoftg1.external.service.BookIsbnGateway;
 import pt.psoft.g1.psoftg1.genremanagement.repositories.GenreRepository;
 import pt.psoft.g1.psoftg1.authormanagement.repositories.AuthorRepository;
 import pt.psoft.g1.psoftg1.exceptions.ConflictException;
@@ -36,12 +37,16 @@ public class BookServiceImpl implements BookService {
 	private final AuthorRepository authorRepository;
 	private final PhotoRepository photoRepository;
 	private final ReaderRepository readerRepository;
+	private final BookIsbnGateway isbnGateway;
 
 	@Value("${suggestionsLimitPerGenre}")
 	private long suggestionsLimitPerGenre;
 
 	@Override
-	public Book create(CreateBookRequest request, String isbn) {
+	public Book create(CreateBookRequest request) {
+
+		String isbn = isbnGateway.getIsbnByTitle(request.getTitle())
+				.orElseThrow(() -> new NotFoundException("ISBN not found for the given title"));
 
 		if(bookRepository.findByIsbn(isbn).isPresent()){
 			throw new ConflictException("Book with ISBN " + isbn + " already exists");

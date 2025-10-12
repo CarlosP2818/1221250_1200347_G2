@@ -132,7 +132,7 @@ public class UserJpa implements UserDetails {
      */
     public UserJpa(final String username, final String password) {
         this.username = username;
-        setPassword(password);
+        this.password = password;
     }
 
     /**
@@ -151,12 +151,6 @@ public class UserJpa implements UserDetails {
         u.setName(name);
         u.addAuthority(new Role(role));
         return u;
-    }
-
-    public void setPassword(final String password) {
-        Password passwordCheck = new Password(password);
-        final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.password = passwordEncoder.encode(password);
     }
 
     public void addAuthority(final Role r) {

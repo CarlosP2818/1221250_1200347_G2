@@ -10,7 +10,7 @@ import java.util.List;
  *
  */
 public interface BookService {
-    Book create(CreateBookRequest request, String isbn);
+    Book create(CreateBookRequest request);
     Book save(Book book);
     Book findByIsbn(String isbn);
     Book update(UpdateBookRequest request, String currentVersion);
