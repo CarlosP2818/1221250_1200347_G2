@@ -19,7 +19,7 @@ public class AuthorRepositoryJpaImpl implements AuthorRepository {
     private final SpringDataAuthorRepository jpaRepository;
 
     @Override
-    public Optional<Author> findByAuthorNumber(Long authorNumber) {
+    public Optional<Author> findByAuthorNumber(String authorNumber) {
         return jpaRepository.findByAuthorNumber(authorNumber).map(AuthorJpaMapper::toDomain);
     }
 
@@ -61,7 +61,7 @@ public class AuthorRepositoryJpaImpl implements AuthorRepository {
     }
 
     @Override
-    public List<Author> findCoAuthorsByAuthorNumber(Long authorNumber) {
+    public List<Author> findCoAuthorsByAuthorNumber(String authorNumber) {
         // Implement after BookJpa exists, with a JPQL query on JPA entities.
         throw new UnsupportedOperationException("findCoAuthorsByAuthorNumber not implemented in the JPA adapter yet");
     }

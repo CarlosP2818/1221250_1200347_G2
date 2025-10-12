@@ -31,7 +31,7 @@ public class AuthorRepoMongoImpl implements AuthorRepository {
     }
 
     @Override
-    public Optional<Author> findByAuthorNumber(Long authorNumber) {
+    public Optional<Author> findByAuthorNumber(String authorNumber) {
         Query query = new Query();
         query.addCriteria(Criteria.where("authorNumber").is(authorNumber));
         AuthorMongo authorMongo = mongoTemplate.findOne(query, AuthorMongo.class);
@@ -79,7 +79,7 @@ public class AuthorRepoMongoImpl implements AuthorRepository {
     }
 
     @Override
-    public List<Author> findCoAuthorsByAuthorNumber(Long authorNumber) {
+    public List<Author> findCoAuthorsByAuthorNumber(String authorNumber) {
         return List.of();
     }
 }

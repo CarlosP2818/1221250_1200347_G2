@@ -59,7 +59,7 @@ public class BookRepositoryJpaImpl implements BookRepository {
     }
 
     @Override
-    public List<Book> findBooksByAuthorNumber(Long authorNumber) {
+    public List<Book> findBooksByAuthorNumber(String authorNumber) {
         return jpaRepository.findBooksByAuthorNumber(authorNumber)
                 .stream().map(BookJpaMapper::toDomain).toList();
     }

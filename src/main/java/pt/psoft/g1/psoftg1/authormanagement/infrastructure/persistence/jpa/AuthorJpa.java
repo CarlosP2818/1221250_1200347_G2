@@ -15,6 +15,8 @@ import lombok.Getter;
 import lombok.Setter;
 import pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa.NameEmbeddable;
 import pt.psoft.g1.psoftg1.shared.model.Photo;
+import pt.psoft.g1.psoftg1.shared.services.Base65IdGenerator;
+
 //TODO: generate API manually base65
 @Setter
 @Getter
@@ -22,9 +24,8 @@ import pt.psoft.g1.psoftg1.shared.model.Photo;
 @Table(name = "Author")
 public class AuthorJpa {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "AUTHOR_NUMBER")
-    private Long authorNumber;
+    private String authorNumber;
 
     @Version
     private Long version;
@@ -44,6 +45,7 @@ public class AuthorJpa {
     }
 
     public AuthorJpa(NameEmbeddable name, BioEmbeddable bio, Photo photo) {
+        this.authorNumber = Base65IdGenerator.generateId();
         this.name = name;
         this.bio = bio;
         this.photo = photo;

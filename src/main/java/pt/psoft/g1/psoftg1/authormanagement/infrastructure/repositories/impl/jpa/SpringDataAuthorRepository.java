@@ -6,8 +6,8 @@ import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.Autho
 import java.util.List;
 import java.util.Optional;
 
-public interface SpringDataAuthorRepository extends JpaRepository<AuthorJpa, Long> {
-    Optional<AuthorJpa> findByAuthorNumber(Long authorNumber);
+public interface SpringDataAuthorRepository extends JpaRepository<AuthorJpa, String> {
+    Optional<AuthorJpa> findByAuthorNumber(String authorNumber);
 
     List<AuthorJpa> findByName_NameStartsWith(String name);
 

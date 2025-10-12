@@ -19,7 +19,7 @@ public class AuthorMongoMapper {
                 entity.getBio() != null ? entity.getBio().toString() : null,
                 entity.getAuthorNumber() != null ? entity.getAuthorNumber().toString() : null
         );
-        author.setAuthorNumber(entity.getAuthorNumber());
+        author.setAuthorNumber(entity.getAuthorNumber().toString());
         author.setVersion(entity.getVersion());
 
         return author;
@@ -33,7 +33,7 @@ public class AuthorMongoMapper {
                 domain.getName() != null ? new Name(domain.getName()) : null,
                 domain.getVersion() != null ? domain.getVersion() : 0L
         );
-        entity.setAuthorNumber(domain.getAuthorNumber());
+        entity.setAuthorNumber(Long.parseLong(domain.getAuthorNumber()));
         return entity;
     }
 }

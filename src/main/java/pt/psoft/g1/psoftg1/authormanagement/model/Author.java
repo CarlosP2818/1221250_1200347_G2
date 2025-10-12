@@ -12,9 +12,8 @@ import pt.psoft.g1.psoftg1.shared.model.Name;
 @Getter
 @Setter
 public class Author extends EntityWithPhoto {
-    private Long pk;
 
-    private Long authorNumber;
+    private String authorNumber;
 
     private long version;
 
@@ -34,7 +33,7 @@ public class Author extends EntityWithPhoto {
         return version;
     }
 
-    public Long getId() {
+    public String getId() {
         return authorNumber;
     }
 
