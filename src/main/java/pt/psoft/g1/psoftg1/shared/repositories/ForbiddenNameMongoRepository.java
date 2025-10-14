@@ -1,16 +1,18 @@
 package pt.psoft.g1.psoftg1.shared.repositories;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Repository;
 import pt.psoft.g1.psoftg1.shared.model.ForbiddenName;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ForbiddenNameRepositoryNoSQL implements ForbiddenNameRepository {
+@Repository
+public class ForbiddenNameMongoRepository implements ForbiddenNameRepository {
 
     private final MongoTemplate mongoTemplate;
 
-    public ForbiddenNameRepositoryNoSQL(MongoTemplate mongoTemplate) {
+    public ForbiddenNameMongoRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
