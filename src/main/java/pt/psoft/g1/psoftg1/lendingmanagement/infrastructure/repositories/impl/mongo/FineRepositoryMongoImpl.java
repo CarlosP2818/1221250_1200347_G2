@@ -1,15 +1,20 @@
-package pt.psoft.g1.psoftg1.lendingmanagement.repositories;
+package pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.repositories.impl.mongo;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Repository;
 import pt.psoft.g1.psoftg1.lendingmanagement.model.Fine;
+import pt.psoft.g1.psoftg1.lendingmanagement.repositories.FineRepository;
 
 import java.util.Optional;
 
-public class FineRepositoryNoSql implements FineRepository {
+@Repository
+@Profile("mongo")
+public class FineRepositoryMongoImpl implements FineRepository {
 
     private final MongoTemplate mongoTemplate;
 
-    public FineRepositoryNoSql(MongoTemplate mongoTemplate) {
+    public FineRepositoryMongoImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
