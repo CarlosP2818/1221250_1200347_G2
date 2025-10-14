@@ -6,33 +6,37 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import pt.psoft.g1.psoftg1.authormanagement.model.Bio;
-import pt.psoft.g1.psoftg1.shared.model.Name;
+import pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa.NameEmbeddable;
+import pt.psoft.g1.psoftg1.shared.model.Photo;
+import pt.psoft.g1.psoftg1.shared.services.Base65IdGenerator;
 
-@Document(collection = "author")
 @Getter
 @Setter
+@Document(collection = "author")
 public class AuthorMongo {
 
     @Id
-    private Long authorNumber;
+    private String authorNumber;
 
     @Version
     private long version;
 
     @Field("name")
-    private Name name;
+    private NameEmbeddable name;
 
     @Field("bio")
-    private Bio bio;
+    private BioMongo bio;
+
+    private Photo photo;
 
     public AuthorMongo() {
     }
 
-    public AuthorMongo(Bio bio, Name name, long version) {
-        this.bio = bio;
+    public AuthorMongo(NameEmbeddable name, BioMongo bio, Photo photo) {
+        this.authorNumber = Base65IdGenerator.generateId();
         this.name = name;
-        this.version = version;
+        this.bio = bio;
+        this.photo = photo;
     }
 }
 
