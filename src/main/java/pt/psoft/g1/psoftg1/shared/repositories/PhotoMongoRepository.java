@@ -1,12 +1,14 @@
 package pt.psoft.g1.psoftg1.shared.repositories;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Repository;
 
-public class PhotoRepositoryNoSQL implements PhotoRepository {
+@Repository
+public class PhotoMongoRepository implements PhotoRepository {
 
     private final MongoTemplate mongoTemplate;
 
-    public PhotoRepositoryNoSQL(MongoTemplate mongoTemplate) {
+    public PhotoMongoRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 

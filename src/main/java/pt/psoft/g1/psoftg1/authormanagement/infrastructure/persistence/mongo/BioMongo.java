@@ -7,7 +7,7 @@ import pt.psoft.g1.psoftg1.shared.model.StringUtilsCustom;
 
 @Document(collection = "author")
 public class BioMongo {
-    private final int BIO_MAX_LENGTH = 4096;
+    private static final int BIO_MAX_LENGTH = 4096;
 
     @NotNull
     @Size(min = 1, max = BIO_MAX_LENGTH)

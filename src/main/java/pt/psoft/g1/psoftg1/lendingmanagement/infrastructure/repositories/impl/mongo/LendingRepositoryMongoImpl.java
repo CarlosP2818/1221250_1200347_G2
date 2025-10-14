@@ -1,18 +1,23 @@
-package pt.psoft.g1.psoftg1.lendingmanagement.repositories;
+package pt.psoft.g1.psoftg1.lendingmanagement.infrastructure.repositories.impl.mongo;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Repository;
 import pt.psoft.g1.psoftg1.lendingmanagement.model.Lending;
+import pt.psoft.g1.psoftg1.lendingmanagement.repositories.LendingRepository;
 import pt.psoft.g1.psoftg1.shared.services.Page;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class LendingRepositoryNoSql implements LendingRepository {
+@Repository
+@Profile("mongo")
+public class LendingRepositoryMongoImpl implements LendingRepository {
 
     private final MongoTemplate mongoTemplate;
 
-    public LendingRepositoryNoSql(MongoTemplate mongoTemplate) {
+    public LendingRepositoryMongoImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 

@@ -1,10 +1,11 @@
-package pt.psoft.g1.psoftg1.genremanagement.infrastructure.repositories.impl.persistense.mongo;
+package pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.mongo;
 
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import pt.psoft.g1.psoftg1.genremanagement.model.Genre;
 
 @Document(collection = "genre")
 public class GenreMongo {
@@ -39,6 +40,22 @@ public class GenreMongo {
 
     @Override
     public String toString() {
+        return genre;
+    }
+
+    public Genre toDomain() {
+        return new Genre(this.genre);
+    }
+
+    public String getPk() {
+        return pk;
+    }
+
+    public void setPk(String pk) {
+        this.pk = pk;
+    }
+
+    public String getGenre() {
         return genre;
     }
 }
