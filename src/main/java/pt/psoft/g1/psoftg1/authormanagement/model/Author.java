@@ -11,11 +11,12 @@ import pt.psoft.g1.psoftg1.shared.model.Name;
 
 @Getter
 @Setter
+//TODO: ask if authorNumber should be generated automatically with the Base65IdGenerator or as a Long auto-increment
 public class Author extends EntityWithPhoto {
 
     private String authorNumber;
 
-    private long version;
+    //private long version;
 
     private Name name;
 
@@ -29,9 +30,9 @@ public class Author extends EntityWithPhoto {
         this.bio = new Bio(bio);
     }
 
-    public Long getVersion() {
-        return version;
-    }
+    //public Long getVersion() {
+    //    return version;
+    //}
 
     public String getId() {
         return authorNumber;
@@ -49,8 +50,8 @@ public class Author extends EntityWithPhoto {
 
 
     public void applyPatch(final long desiredVersion, final UpdateAuthorRequest request) {
-        if (this.version != desiredVersion)
-            throw new StaleObjectStateException("Object was already modified by another user", this.authorNumber);
+       // if (this.version != desiredVersion)
+       //     throw new StaleObjectStateException("Object was already modified by another user", this.authorNumber);
         if (request.getName() != null)
             setName(request.getName());
         if (request.getBio() != null)
@@ -60,9 +61,9 @@ public class Author extends EntityWithPhoto {
     }
 
     public void removePhoto(long desiredVersion) {
-        if(desiredVersion != this.version) {
-            throw new ConflictException("Provided version does not match latest version of this object");
-        }
+        //if(desiredVersion != this.version) {
+        //    throw new ConflictException("Provided version does not match latest version of this object");
+        //}
 
         setPhotoInternal(null);
     }
