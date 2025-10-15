@@ -28,9 +28,8 @@ public class AuthorJpaMapper {
         // Author(Long authorNumber, Long version, String name, String bio, String photoUri)
         String photoUri = jpa.getPhoto() != null ? jpa.getPhoto().getPhotoFile() : null;
         Author domain = new Author(jpa.getName().getName(), jpa.getBio().getBio(), photoUri);
-        // TODO: set id and version on domain (requires domain support)
         domain.setAuthorNumber(jpa.getAuthorNumber()); // suggest package-private setter
-        domain.setVersion(jpa.getVersion());
+        //domain.setVersion(jpa.getVersion());
         return domain;
     }
 
@@ -44,9 +43,7 @@ public class AuthorJpaMapper {
         }
         final var name = new NameEmbeddable(domain.getName());
         final var bio = new BioEmbeddable(domain.getBio());
-        final var jpa = new AuthorJpa(name, bio, domain.getPhoto());// safe if null (for creates)
         // If domain exposes version, set it; JPA @Version will manage increments.
-        jpa.setVersion(domain.getVersion());
-        return jpa;
+        return new AuthorJpa(name, bio, domain.getPhoto());
     }
 }
