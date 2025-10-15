@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pt.psoft.g1.psoftg1.authormanagement.infrastructure.repositories.impl.jpa.AuthorJpaMapper;
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.authormanagement.services.AuthorService;
 import pt.psoft.g1.psoftg1.authormanagement.services.CreateAuthorRequest;
@@ -68,7 +69,7 @@ public class AuthorController {
         final var newauthorUri = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .build().toUri();
 
-        return ResponseEntity.created(newauthorUri).eTag(Long.toString(author.getVersion()))
+        return ResponseEntity.created(newauthorUri).eTag(Long.toString(AuthorJpaMapper.toJpa(author).getVersion()))
                 .body(authorViewMapper.toAuthorView(author));
     }
 
@@ -98,7 +99,7 @@ public class AuthorController {
         Author author = authorService.partialUpdate(authorNumber, resource, concurrencyService.getVersionFromIfMatchHeader(ifMatchValue));
 
         return ResponseEntity.ok()
-                .eTag(Long.toString(author.getVersion()))
+                .eTag(Long.toString(AuthorJpaMapper.toJpa(author).getVersion()))
                 .body(authorViewMapper.toAuthorView(author));
     }
 
@@ -113,7 +114,7 @@ public class AuthorController {
                 .orElseThrow(() -> new NotFoundException(Author.class, authorNumber));
 
         return ResponseEntity.ok()
-                .eTag(Long.toString(author.getVersion()))
+                .eTag(Long.toString(AuthorJpaMapper.toJpa(author).getVersion()))
                 .body(authorViewMapper.toAuthorView(author));
     }
 
@@ -212,7 +213,7 @@ public class AuthorController {
         }
 
         this.fileStorageService.deleteFile(author.getPhoto().getPhotoFile());
-        authorService.removeAuthorPhoto(author.getAuthorNumber(), author.getVersion());
+        authorService.removeAuthorPhoto(author.getAuthorNumber(), AuthorJpaMapper.toJpa(author).getVersion());
 
         return ResponseEntity.ok().build();
     }

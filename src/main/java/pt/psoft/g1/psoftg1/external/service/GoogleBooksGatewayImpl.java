@@ -22,20 +22,26 @@ public class GoogleBooksGatewayImpl implements BookIsbnGateway {
                 .uri(uriBuilder -> uriBuilder.queryParam("q", "intitle:" + title).build())
                 .retrieve()
                 .bodyToMono(String.class)
-                .block();  // em apps reais usa Mono/Flux sem bloquear
+                .block();
 
-        // Parse JSON para extrair ISBN (precisas de uma biblioteca como Jackson ou Gson)
-        // Retorna apenas o primeiro ISBN encontrado
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(response);
             JsonNode items = root.path("items");
+
             if (items.isArray() && items.size() > 0) {
-                JsonNode volumeInfo = items.get(0).path("volumeInfo");
-                JsonNode industryIdentifiers = volumeInfo.path("industryIdentifiers");
-                for (JsonNode id : industryIdentifiers) {
-                    if (id.path("type").asText().equals("ISBN_13")) {
-                        return Optional.of(id.path("identifier").asText());
+                for (JsonNode item : items) {
+                    JsonNode volumeInfo = item.path("volumeInfo");
+                    String bookTitle = volumeInfo.path("title").asText();
+
+                    // compara ignorando maiúsculas/minúsculas e espaços extras
+                    if (bookTitle.equalsIgnoreCase(title.trim())) {
+                        JsonNode industryIdentifiers = volumeInfo.path("industryIdentifiers");
+                        for (JsonNode id : industryIdentifiers) {
+                            if (id.path("type").asText().equals("ISBN_13")) {
+                                return Optional.of(id.path("identifier").asText());
+                            }
+                        }
                     }
                 }
             }
@@ -45,5 +51,6 @@ public class GoogleBooksGatewayImpl implements BookIsbnGateway {
 
         return Optional.empty();
     }
+
 }
 
