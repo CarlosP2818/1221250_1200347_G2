@@ -1,5 +1,6 @@
 package pt.psoft.g1.psoftg1.external.service;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Profile("open")
 @Component
 public class OpenLibraryGatewayImpl implements BookIsbnGateway {
 
