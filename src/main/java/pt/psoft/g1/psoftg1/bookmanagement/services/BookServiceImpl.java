@@ -56,7 +56,7 @@ public class BookServiceImpl implements BookService {
 		List<Author> authors = new ArrayList<>();
 		for (String authorNumber : authorNumbers) {
 
-			Optional<Author> temp = authorRepository.findByAuthorNumber(authorNumber);
+			Optional<Author> temp = authorRepository.findByAuthorNumber(Long.parseLong(authorNumber));
 			if(temp.isEmpty()) {
 				continue;
 			}
@@ -89,7 +89,7 @@ public class BookServiceImpl implements BookService {
             List<String> authorNumbers = request.getAuthors();
             List<Author> authors = new ArrayList<>();
             for (String authorNumber : authorNumbers) {
-                Optional<Author> temp = authorRepository.findByAuthorNumber(authorNumber);
+                Optional<Author> temp = authorRepository.findByAuthorNumber(Long.parseLong(authorNumber));
                 if (temp.isEmpty()) {
                     continue;
                 }

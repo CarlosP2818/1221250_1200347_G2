@@ -44,6 +44,6 @@ public interface SpringDataBookRepository extends JpaRepository<BookJpa, Long> {
                     "JOIN AUTHOR a on ba.AUTHORS_AUTHOR_NUMBER = a.AUTHOR_NUMBER " +
                     "WHERE a.AUTHOR_NUMBER = :authorNumber",
             nativeQuery = true)
-    List<BookJpa> findBooksByAuthorNumber(String authorNumber);
+    List<BookJpa> findBooksByAuthorNumber(Long authorNumber);
 
 }

@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.AuthorJpa;
 import pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa.BioEmbeddable;
+import pt.psoft.g1.psoftg1.authormanagement.model.Bio;
 import pt.psoft.g1.psoftg1.readermanagement.infraestructure.persistence.jpa.ReaderDetailsJpa;
 import pt.psoft.g1.psoftg1.readermanagement.infraestructure.repositories.impl.ReaderDetailsJpaMapper;
 import pt.psoft.g1.psoftg1.readermanagement.infraestructure.repositories.impl.SpringDataReaderDetailsRepository;
 import pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa.NameEmbeddable;
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
+import pt.psoft.g1.psoftg1.shared.model.Name;
 
 import java.util.Optional;
 
@@ -27,7 +29,9 @@ public class AuthorJpaMapper {
         // Example (to add in domain):
         // Author(Long authorNumber, Long version, String name, String bio, String photoUri)
         String photoUri = jpa.getPhoto() != null ? jpa.getPhoto().getPhotoFile() : null;
-        Author domain = new Author(jpa.getName().getName(), jpa.getBio().getBio(), photoUri);
+        Name authorName = jpa.getName() != null ? new Name(jpa.getName().getName()) : null;
+        Bio authorBio = jpa.getBio() != null ? new Bio(jpa.getBio().getBio()) : null;
+        Author domain = new Author(authorName, authorBio, photoUri);
         domain.setAuthorNumber(jpa.getAuthorNumber()); // suggest package-private setter
         //domain.setVersion(jpa.getVersion());
         return domain;
