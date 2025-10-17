@@ -7,8 +7,10 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Size;
 import pt.psoft.g1.psoftg1.shared.model.StringUtilsCustom;
 
+import java.io.Serializable;
+
 @Embeddable
-public class DescriptionEmbedded {
+public class DescriptionEmbedded implements Serializable {
     @Transient
     private final int DESC_MAX_LENGTH = 4096;
 

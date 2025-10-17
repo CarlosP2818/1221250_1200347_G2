@@ -27,8 +27,8 @@ public class AuthorRepoMongoImpl implements AuthorRepository {
     private final SpringDataMongoAuthorRepository mongoRepository;
 
     @Override
-    public Optional<Author> findByAuthorNumber(String authorNumber) {
-        return mongoRepository.findByAuthorNumber(authorNumber).map(AuthorMongoMapper::toDomain);
+    public Optional<Author> findByAuthorNumber(Long authorNumber) {
+        return mongoRepository.findByAuthorNumber(String.valueOf(authorNumber)).map(AuthorMongoMapper::toDomain);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class AuthorRepoMongoImpl implements AuthorRepository {
     }
 
     @Override
-    public List<Author> findCoAuthorsByAuthorNumber(String authorNumber) {
+    public List<Author> findCoAuthorsByAuthorNumber(Long authorNumber) {
         return List.of();
     }
 }

@@ -2,13 +2,16 @@ package pt.psoft.g1.psoftg1.bookmanagement.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.SecondaryTable;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Embeddable
-public class Title {
+public class Title implements Serializable {
     @Transient
     private final int TITLE_MAX_LENGTH = 128;
     @NotBlank(message = "Title cannot be blank")

@@ -42,6 +42,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Cacheable(value = "authors_name", key = "#name")
     public List<Author> findByName(String name) {
         return authorRepository.searchByNameNameStartsWith(name);
     }

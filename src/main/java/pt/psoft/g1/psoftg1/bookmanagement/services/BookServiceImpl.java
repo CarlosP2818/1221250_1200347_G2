@@ -1,11 +1,17 @@
 package pt.psoft.g1.psoftg1.bookmanagement.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import pt.psoft.g1.psoftg1.authormanagement.model.Author;
 import pt.psoft.g1.psoftg1.bookmanagement.model.*;
@@ -39,10 +45,15 @@ public class BookServiceImpl implements BookService {
 	private final ReaderRepository readerRepository;
 	private final BookIsbnGateway isbnGateway;
 
+	@Autowired
+	private CacheManager cacheManager;
+
 	@Value("${suggestionsLimitPerGenre}")
 	private long suggestionsLimitPerGenre;
 
 	@Override
+	@Transactional
+	@CachePut(value = "books", key = "#result.isbn")
 	public Book create(CreateBookRequest request) {
 
 		String isbn = isbnGateway.getIsbnByTitle(request.getTitle())
@@ -82,6 +93,8 @@ public class BookServiceImpl implements BookService {
 
 
 	@Override
+	@Transactional
+	@CacheEvict(value = "books", key = "#request.isbn")
 	public Book update(UpdateBookRequest request, String currentVersion) {
 
         var book = findByIsbn(request.getIsbn());
@@ -129,6 +142,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Cacheable(value = "topBooks")
 	public List<BookCountDTO> findTop5BooksLent(){
 		LocalDate oneYearAgo = LocalDate.now().minusYears(1);
 		Pageable pageableRules = PageRequest.of(0,5);
@@ -136,6 +150,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Transactional
+	@CacheEvict(value = "books", key = "#isbn")
 	public Book removeBookPhoto(String isbn, long desiredVersion) {
 		Book book = this.findByIsbn(isbn);
 		String photoFile;
@@ -152,19 +168,23 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Cacheable(value = "booksByGenre", key = "#genre")
 	public List<Book> findByGenre(String genre) {
 		return this.bookRepository.findByGenre(genre);
 	}
 
+	@Cacheable(value = "booksByTitle", key = "#title")
 	public List<Book> findByTitle(String title) {
 		return bookRepository.findByTitle(title);
 	}
 
 	@Override
+	@Cacheable(value = "booksByAuthor", key = "#authorName")
 	public List<Book> findByAuthorName(String authorName) {
 		return bookRepository.findByAuthorName(authorName + "%");
 	}
 
+	@Cacheable(value = "books", key = "#isbn")
 	public Book findByIsbn(String isbn) {
 		return this.bookRepository.findByIsbn(isbn)
 				.orElseThrow(() -> new NotFoundException(Book.class, isbn));

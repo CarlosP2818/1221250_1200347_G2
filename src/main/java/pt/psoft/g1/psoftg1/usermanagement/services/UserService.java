@@ -22,6 +22,7 @@ package pt.psoft.g1.psoftg1.usermanagement.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -64,7 +65,7 @@ public class UserService implements UserDetailsService {
 	public List<User> findByNameLike(String name) { return this.userRepo.findByNameNameContains(name); }
 
 	@Transactional
-	@CacheEvict(value = "users", key = "#request.username")
+	@CacheEvict(value = {"users", "usersByUsername"}, allEntries = true)
 	public User create(final CreateUserRequest request) {
 		if (userRepo.findByUsername(request.getUsername()).isPresent()) {
 			throw new ConflictException("Username already exists!");
@@ -100,6 +101,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Transactional
+	@CacheEvict(value = {"users", "usersByUsername"}, allEntries = true)
 	public User update(final Long id, final EditUserRequest request) {
 		final User user = userRepo.getById(id);
 		userEditMapper.update(request, user);
@@ -108,6 +110,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Transactional
+	@CacheEvict(value = {"users", "usersByUsername"}, allEntries = true)
 	public User delete(final Long id) {
 		final User user = userRepo.getById(id);
 
@@ -118,6 +121,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Override
+	@CacheEvict(value = {"users", "usersByUsername"}, allEntries = true)
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		return userRepo.findByUsername(username).orElseThrow(
 				() -> new UsernameNotFoundException(String.format("User with username - %s, not found", username)));
@@ -127,10 +131,12 @@ public class UserService implements UserDetailsService {
 		return userRepo.findByUsername(username).isPresent();
 	}
 
+	@Cacheable(value = "users", key = "#id")
 	public User getUser(final Long id) {
 		return userRepo.getById(id);
 	}
 
+	@Cacheable(value = "usersByUsername", key = "#username")
 	public Optional<User> findByUsername(final String username) { return userRepo.findByUsername(username); }
 
 	public List<User> searchUsers(Page page, SearchUsersQuery query) {

@@ -5,8 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Embeddable
-public class TitleEmbedded {
+public class TitleEmbedded implements Serializable {
 
     private static final int TITLE_MAX_LENGTH = 128;
 

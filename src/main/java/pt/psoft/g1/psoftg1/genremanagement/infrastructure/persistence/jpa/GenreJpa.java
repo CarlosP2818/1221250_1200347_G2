@@ -7,11 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "Genre")
 @Getter
 @NoArgsConstructor
-public class GenreJpa {
+public class GenreJpa implements Serializable {
     @Transient
     private final int GENRE_MAX_LENGTH = 100;
     @Id

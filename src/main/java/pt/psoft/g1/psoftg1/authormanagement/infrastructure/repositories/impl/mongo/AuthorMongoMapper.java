@@ -31,20 +31,22 @@ public class AuthorMongoMapper {
     public static Author toDomain(AuthorMongo entity) {
         if (entity == null) return null;
 
+        Name authorName = entity.getName() != null ? new Name(entity.getName().getName()) : null;
+        Bio authorBio = entity.getBio() != null ? new Bio(entity.getBio().toString()) : null;
+
         Author author = new Author(
-                entity.getName() != null ? entity.getName().getName() : null,
-                entity.getBio() != null ? entity.getBio().toString() : null,
+                authorName,
+                authorBio,
                 entity.getAuthorNumber() != null ? entity.getAuthorNumber().toString() : null
         );
-        author.setAuthorNumber(entity.getAuthorNumber().toString());
-        author.setVersion(entity.getVersion());
+        author.setAuthorNumber(Long.valueOf(entity.getAuthorNumber().toString()));
 
         return author;
     }
 
     public static AuthorMongo toMongo(Author domain) {
         if (repo != null) {
-            Optional<AuthorMongo> existing = repo.findByAuthorNumber(domain.getAuthorNumber());
+            Optional<AuthorMongo> existing = repo.findByAuthorNumber(String.valueOf(domain.getAuthorNumber()));
             if (existing.isPresent()) {
                 return existing.get();
             }
@@ -53,7 +55,6 @@ public class AuthorMongoMapper {
         final var bio = new BioMongo(domain.getBio());
         final var mongo = new AuthorMongo(name, bio, domain.getPhoto());// safe if null (for creates)
         // If domain exposes version, set it; MONGO @Version will manage increments.
-        mongo.setVersion(domain.getVersion());
         return mongo;
     }
 }

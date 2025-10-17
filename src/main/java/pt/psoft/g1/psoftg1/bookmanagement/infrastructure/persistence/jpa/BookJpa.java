@@ -11,6 +11,7 @@ import pt.psoft.g1.psoftg1.bookmanagement.model.Title;
 import pt.psoft.g1.psoftg1.genremanagement.infrastructure.persistence.jpa.GenreJpa;
 import pt.psoft.g1.psoftg1.shared.model.Photo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 })
 @Setter
 @Getter
-public class BookJpa {
+public class BookJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long pk;

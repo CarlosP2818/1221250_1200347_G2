@@ -7,11 +7,13 @@ import pt.psoft.g1.psoftg1.shared.infrastructure.persistence.jpa.NameEmbeddable;
 import pt.psoft.g1.psoftg1.shared.model.Photo;
 import pt.psoft.g1.psoftg1.shared.services.Base65IdGenerator;
 
+import java.io.Serializable;
+
 @Setter
 @Getter
 @Entity
 @Table(name = "Author")
-public class AuthorJpa {
+public class AuthorJpa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,11 +7,12 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 
 @Getter
-public abstract class EntityWithPhoto {
+public abstract class EntityWithPhoto implements Serializable {
 
     protected Photo photo;
 

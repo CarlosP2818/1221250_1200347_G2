@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
-public class Genre {
+import java.io.Serializable;
+
+public class Genre implements Serializable {
 
     @Getter
     String genre;

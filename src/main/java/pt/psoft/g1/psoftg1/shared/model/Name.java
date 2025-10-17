@@ -7,9 +7,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import org.springframework.context.annotation.PropertySource;
 
+import java.io.Serializable;
+
 @Getter
 @PropertySource({"classpath:config/library.properties"})
-public class Name {
+public class Name implements Serializable {
 
     String name;
     public Name(String name){

@@ -10,11 +10,12 @@ import pt.psoft.g1.psoftg1.exceptions.ConflictException;
 import pt.psoft.g1.psoftg1.genremanagement.model.Genre;
 import pt.psoft.g1.psoftg1.shared.model.EntityWithPhoto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Book extends EntityWithPhoto {
+public class Book extends EntityWithPhoto implements Serializable {
     @Getter
     long pk;
 

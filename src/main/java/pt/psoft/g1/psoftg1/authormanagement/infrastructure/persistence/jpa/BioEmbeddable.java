@@ -3,8 +3,10 @@ package pt.psoft.g1.psoftg1.authormanagement.infrastructure.persistence.jpa;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
+import java.io.Serializable;
+
 @Embeddable
-public class BioEmbeddable {
+public class BioEmbeddable implements Serializable {
 
     @Column(length = 4096, nullable = false)
     private String bio;

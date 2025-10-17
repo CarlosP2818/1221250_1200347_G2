@@ -7,8 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import pt.psoft.g1.psoftg1.shared.model.StringUtilsCustom;
 
+import java.io.Serializable;
+
 @Embeddable
-public class Bio {
+public class Bio implements Serializable {
     @Transient
     private final int BIO_MAX_LENGTH = 4096;
 

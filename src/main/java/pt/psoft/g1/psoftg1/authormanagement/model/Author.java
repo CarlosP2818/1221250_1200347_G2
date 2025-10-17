@@ -10,10 +10,12 @@ import pt.psoft.g1.psoftg1.shared.model.EntityWithPhoto;
 import pt.psoft.g1.psoftg1.shared.model.Name;
 import pt.psoft.g1.psoftg1.shared.model.Photo;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 //TODO: ask if authorNumber should be generated automatically with the Base65IdGenerator or as a Long auto-increment
-public class Author extends EntityWithPhoto {
+public class Author extends EntityWithPhoto implements Serializable {
 
     private Long authorNumber;
 
