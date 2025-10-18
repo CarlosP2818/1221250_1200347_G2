@@ -1,7 +1,6 @@
 package pt.psoft.g1.psoftg1.bookmanagement.infrastructure.persistence.mongo;
 
 import com.mongodb.lang.Nullable;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Size;
 import pt.psoft.g1.psoftg1.shared.model.StringUtilsCustom;
@@ -9,9 +8,9 @@ import pt.psoft.g1.psoftg1.shared.model.StringUtilsCustom;
 public class DescriptionMongo {
 
     @Transient
-    private final int DESC_MAX_LENGTH = 4096;
+    private static final int DESC_MAX_LENGTH = 4096;
 
-    @Size(max = 4096)
+    @Size(max = DESC_MAX_LENGTH)
     private String description;
 
     public DescriptionMongo(String description) {

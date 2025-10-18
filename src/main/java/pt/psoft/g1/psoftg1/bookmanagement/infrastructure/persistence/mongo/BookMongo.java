@@ -28,21 +28,21 @@ import java.util.List;
 public class BookMongo {
 
     @Id
-    String pk;
+    long pk;
 
     @Version
     private Long version;
 
-    IsbnMongo isbn;
+    IsbnEmbedded isbn;
 
-    TitleMongo title;
+    TitleEmbedded title;
 
     GenreMongo genre;
 
     @DBRef
     private List<AuthorMongo> authors = new ArrayList<>();
 
-    DescriptionMongo description;
+    DescriptionEmbedded description;
 
     private Photo photo;
 
@@ -51,10 +51,10 @@ public class BookMongo {
     }
 
     public BookMongo(String isbn, String title, String description, GenreMongo genre, List<AuthorMongo> authors, Photo photo) {
-        setTitle(new TitleMongo(title));
-        setIsbn(new IsbnMongo(isbn));
+        setTitle(new TitleEmbedded(title));
+        setIsbn(new IsbnEmbedded(isbn));
         if(description != null)
-            setDescription(new DescriptionMongo(description));
+            setDescription(new DescriptionEmbedded(description));
         if(genre==null)
             throw new IllegalArgumentException("Genre cannot be null");
         setGenre(genre);

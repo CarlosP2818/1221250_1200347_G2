@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import pt.psoft.g1.psoftg1.bookmanagement.infrastructure.repositories.impl.jpa.BookJpaMapper;
 import pt.psoft.g1.psoftg1.bookmanagement.model.Book;
 import pt.psoft.g1.psoftg1.bookmanagement.repositories.BookRepository;
 import pt.psoft.g1.psoftg1.bookmanagement.services.BookCountDTO;
@@ -38,7 +39,8 @@ public class BookRepositoryMongoImpl implements BookRepository {
 
     @Override
     public List<Book> findByAuthorName(String authorName) {
-        return List.of();
+        return mongoRepository.findByAuthorName(authorName)
+                .stream().map(BookMongoMapper::toDomain).toList();
     }
 
     @Override
@@ -54,7 +56,7 @@ public class BookRepositoryMongoImpl implements BookRepository {
     }
 
     @Override
-    public List<Book> findBooksByAuthorNumber(String authorNumber) {
+    public List<Book> findBooksByAuthorNumber(Long authorNumber) {
         return List.of();
     }
 
